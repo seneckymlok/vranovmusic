@@ -168,5 +168,10 @@
 
     .about-silhouettes {
         max-width: 250px;
+        margin-top: -30px;
+    }
+
+    .silhouettes-image {
+        margin-top: -40px;
     }
 }
