@@ -18,6 +18,7 @@
     box-shadow: var(--win-border-raised);
     z-index: var(--z-start-menu);
     animation: slideUp 0.15s ease-out;
+    overflow: hidden;
 }
 
 @keyframes slideUp {
@@ -34,25 +35,9 @@
 
 /* ===== SIDE BANNER ===== */
 .start-menu-banner {
-    width: 28px;
-    min-width: 28px;
+    width: 16px;
+    min-width: 16px;
     background: linear-gradient(to top, var(--win-navy) 0%, var(--win-teal) 100%);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 12px;
-    overflow: hidden;
-}
-
-.banner-text {
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    color: var(--win-white);
-    font-size: 13px;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    line-height: 1;
 }
 
 /* ===== MENU ITEMS ===== */

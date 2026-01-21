@@ -25,9 +25,7 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, items, is
 
             <div className={`start-menu ${isMobile ? 'mobile' : ''}`}>
                 {/* Side Banner */}
-                <div className="start-menu-banner">
-                    <span className="banner-text pixel-text">VRANOV<br />MUSIC<br />OS</span>
-                </div>
+                <div className="start-menu-banner" />
 
                 {/* Menu Items */}
                 <div className="start-menu-items">
