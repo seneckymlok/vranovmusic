@@ -1,0 +1,153 @@
+/* ========================================
+   Desktop Styles
+   ======================================== */
+
+.desktop {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: var(--taskbar-height);
+}
+
+/* ===== WALLPAPER - Split Black/White with Centered Logo ===== */
+.desktop-wallpaper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: var(--taskbar-height);
+    z-index: var(--z-desktop);
+    overflow: hidden;
+}
+
+/* Left side - White */
+.desktop-wallpaper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #FFFFFF;
+}
+
+/* Right side - Black */
+.desktop-wallpaper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background: #000000;
+}
+
+/* Centered VM Logo Image */
+.wallpaper-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Logo image styling - prominent and polished */
+.wallpaper-logo-image {
+    width: 280px;
+    height: auto;
+    object-fit: contain;
+    /* Subtle shadow for depth against both sides */
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.25));
+}
+
+/* Tagline below logo */
+.wallpaper-tagline {
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    /* Split color: left half dark, right half white */
+    background: linear-gradient(90deg, #1a1a1a 50%, #ffffff 50%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+}
+
+/* ===== DESKTOP ICONS GRID ===== */
+.desktop-icons {
+    position: relative;
+    z-index: calc(var(--z-desktop) + 1);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 85px);
+    grid-template-rows: repeat(auto-fill, 90px);
+    gap: 8px;
+    padding: 16px;
+    width: fit-content;
+    max-height: calc(100vh - var(--taskbar-height) - 32px);
+    grid-auto-flow: column;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .desktop-wallpaper {
+        bottom: var(--taskbar-height);
+    }
+
+    .desktop-icons {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto;
+        width: 100%;
+        justify-items: center;
+        gap: 12px;
+        padding: 16px 8px;
+        max-height: calc(100vh - var(--taskbar-height) - 20px);
+    }
+
+    .wallpaper-logo-image {
+        width: 200px;
+    }
+
+    .wallpaper-tagline {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .desktop-icons {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 12px 8px;
+        gap: 8px;
+    }
+
+    .wallpaper-logo-image {
+        width: 160px;
+    }
+}
+
+@media (max-width: 360px) {
+    .desktop-icons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .wallpaper-logo-image {
+        width: 140px;
+    }
+}
+
+/* Mobile safe area support */
+@supports (padding: env(safe-area-inset-bottom)) {
+    @media (max-width: 768px) {
+        .desktop-wallpaper {
+            bottom: calc(var(--taskbar-height) + env(safe-area-inset-bottom));
+        }
+    }
+}

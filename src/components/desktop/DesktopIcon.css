@@ -1,0 +1,165 @@
+/* ========================================
+   Desktop Icon Styles
+   ======================================== */
+
+.desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 75px;
+    padding: 4px;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.desktop-icon:hover .desktop-icon-label {
+    background: var(--win-navy);
+    color: var(--win-white);
+}
+
+.desktop-icon:focus {
+    outline: none;
+}
+
+.desktop-icon:focus .desktop-icon-label,
+.desktop-icon.selected .desktop-icon-label {
+    background: var(--win-navy);
+    color: var(--win-white);
+}
+
+.desktop-icon:focus .desktop-icon-image,
+.desktop-icon.selected .desktop-icon-image {
+    filter: brightness(0.8) saturate(1.5);
+}
+
+.desktop-icon-image {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.1s ease;
+}
+
+.desktop-icon-emoji {
+    font-size: 36px;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5));
+}
+
+/* ===== LABEL STYLING ===== */
+/* Desktop: ALL icons have dark text (they're on white side in grid) */
+.desktop-icon-label {
+    font-size: 11px;
+    color: #1a1a1a;
+    text-shadow:
+        0 0 3px rgba(255, 255, 255, 0.9),
+        1px 1px 0 rgba(255, 255, 255, 0.8);
+    padding: 1px 3px;
+    max-width: 100%;
+    text-align: center;
+    word-wrap: break-word;
+    line-height: 1.2;
+}
+
+/* Press animation for both desktop and mobile */
+.desktop-icon:active .desktop-icon-image {
+    transform: scale(0.9);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .desktop-icon {
+        width: 80px;
+        padding: 8px 4px;
+        min-height: 90px;
+    }
+
+    .desktop-icon.mobile {
+        min-width: 80px;
+        min-height: 90px;
+    }
+
+    .desktop-icon.mobile:active {
+        background: rgba(0, 0, 128, 0.3);
+        border-radius: 4px;
+    }
+
+    .desktop-icon.mobile:active .desktop-icon-label {
+        background: var(--win-navy);
+        color: var(--win-white);
+    }
+
+    .desktop-icon-image {
+        width: var(--icon-size);
+        height: var(--icon-size);
+    }
+
+    .desktop-icon-emoji {
+        font-size: 42px;
+    }
+
+    /* Universal label styling that works on ANY background */
+    .desktop-icon-label {
+        font-size: 11px;
+        max-width: 75px;
+        color: var(--win-white);
+        /* Strong outline effect using multiple text-shadows */
+        text-shadow:
+            /* Black outline */
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000,
+            /* Additional softness */
+            0 0 3px rgba(0, 0, 0, 0.8),
+            0 0 6px rgba(0, 0, 0, 0.5);
+        /* Remove background from default label */
+        background: transparent !important;
+    }
+
+    /* Keep selection/hover background */
+    .desktop-icon:hover .desktop-icon-label,
+    .desktop-icon:focus .desktop-icon-label,
+    .desktop-icon.selected .desktop-icon-label {
+        background: var(--win-navy) !important;
+        text-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .desktop-icon {
+        width: 75px;
+        padding: 6px 2px;
+        min-height: 85px;
+    }
+
+    .desktop-icon-emoji {
+        font-size: 38px;
+    }
+
+    .desktop-icon-label {
+        font-size: 10px;
+        max-width: 68px;
+    }
+}
+
+@media (max-width: 360px) {
+    .desktop-icon {
+        width: 70px;
+        min-height: 80px;
+    }
+
+    .desktop-icon-emoji {
+        font-size: 34px;
+    }
+
+    .desktop-icon-label {
+        font-size: 9px;
+        max-width: 62px;
+    }
+}

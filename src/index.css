@@ -1,0 +1,485 @@
+/* ========================================
+   VRANOV MUSIC OS - Y2K Design System
+   ======================================== */
+
+/* CSS Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ===== COLOR PALETTE ===== */
+  /* Base Colors */
+  --vm-black: #0A0A0A;
+  --vm-purple: #1E0A3C;
+  --vm-purple-dark: #0F0520;
+
+  /* Windows 98 System Colors */
+  --win-navy: #000080;
+  --win-teal: #008080;
+  --win-gray-dark: #808080;
+  --win-gray: #C0C0C0;
+  --win-gray-light: #DFDFDF;
+  --win-white: #FFFFFF;
+
+  /* Accent Colors */
+  --vm-green: #00FF00;
+  --vm-green-dim: #00AA00;
+  --vm-red: #C41E3A;
+  --vm-red-bright: #FF0040;
+  --vm-gold: #D4AF37;
+  --vm-gold-bright: #FFD700;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-system: "Segoe UI", "MS Sans Serif", Tahoma, sans-serif;
+  --font-pixel: "VT323", monospace;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  /* ===== SPACING ===== */
+  --space-xs: 2px;
+  --space-sm: 4px;
+  --space-md: 8px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* ===== WINDOW BORDERS ===== */
+  --win-border-raised:
+    inset -1px -1px var(--vm-black),
+    inset 1px 1px var(--win-white),
+    inset -2px -2px var(--win-gray-dark),
+    inset 2px 2px var(--win-gray-light);
+
+  --win-border-sunken:
+    inset -1px -1px var(--win-white),
+    inset 1px 1px var(--vm-black),
+    inset -2px -2px var(--win-gray-light),
+    inset 2px 2px var(--win-gray-dark);
+
+  /* ===== SIZING ===== */
+  --taskbar-height: 40px;
+  --titlebar-height: 28px;
+  --icon-size: 48px;
+
+  /* ===== Z-INDEX LAYERS ===== */
+  --z-desktop: 1;
+  --z-window: 10;
+  --z-window-active: 20;
+  --z-start-menu: 50;
+  --z-taskbar: 100;
+  --z-modal: 200;
+  --z-boot: 1000;
+
+  /* ===== TOUCH TARGETS ===== */
+  --touch-target-min: 44px;
+
+  /* ===== MOBILE SPECIFIC ===== */
+  --mobile-header-height: 48px;
+  --mobile-animation-duration: 0.25s;
+  --mobile-animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== MOBILE OVERRIDES ===== */
+@media (max-width: 768px) {
+  :root {
+    --taskbar-height: 52px;
+    --titlebar-height: 40px;
+    --icon-size: 56px;
+  }
+}
+
+/* ===== GLOBAL STYLES ===== */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-system);
+  font-size: 13px;
+  background: var(--vm-black);
+  color: var(--win-white);
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: auto;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* No text selection for OS feel */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== SCROLLBAR - Windows 98 Style ===== */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(var(--win-gray) 0% 25%,
+      var(--win-white) 0% 50%) 50% / 2px 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--win-gray);
+  box-shadow: var(--win-border-raised);
+  border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--win-gray-light);
+}
+
+::-webkit-scrollbar-button {
+  background: var(--win-gray);
+  box-shadow: var(--win-border-raised);
+  display: block;
+  height: 16px;
+  width: 16px;
+}
+
+/* ===== BUTTON - Windows 98 Style ===== */
+.btn-98 {
+  font-family: var(--font-system);
+  font-size: 12px;
+  padding: 4px 16px;
+  background: var(--win-gray);
+  color: var(--vm-black);
+  border: none;
+  box-shadow: var(--win-border-raised);
+  cursor: pointer;
+  outline: none;
+  min-width: 75px;
+}
+
+.btn-98:active {
+  box-shadow: var(--win-border-sunken);
+  padding: 5px 15px 3px 17px;
+}
+
+.btn-98:focus {
+  outline: 1px dotted var(--vm-black);
+  outline-offset: -4px;
+}
+
+.btn-98:disabled {
+  color: var(--win-gray-dark);
+  cursor: not-allowed;
+}
+
+/* Primary button with accent */
+.btn-98-primary {
+  background: var(--vm-green);
+  color: var(--vm-black);
+  font-weight: bold;
+}
+
+.btn-98-danger {
+  background: var(--vm-red);
+  color: var(--win-white);
+}
+
+/* ===== INPUT - Windows 98 Style ===== */
+.input-98 {
+  font-family: var(--font-system);
+  font-size: 12px;
+  padding: 4px 6px;
+  background: var(--win-white);
+  color: var(--vm-black);
+  border: none;
+  box-shadow: var(--win-border-sunken);
+  outline: none;
+}
+
+.input-98:focus {
+  outline: none;
+}
+
+/* ===== CRT SCANLINE EFFECT ===== */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(0deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 2px);
+  z-index: 9999;
+}
+
+/* ===== PIXEL TEXT ===== */
+.pixel-text {
+  font-family: var(--font-pixel);
+  letter-spacing: 1px;
+}
+
+.mono-text {
+  font-family: var(--font-mono);
+}
+
+/* ===== WINDOW PANEL ===== */
+.window-panel {
+  background: var(--win-gray);
+  box-shadow: var(--win-border-raised);
+}
+
+.window-panel-sunken {
+  background: var(--vm-black);
+  box-shadow: var(--win-border-sunken);
+}
+
+/* ===== LINKS ===== */
+a {
+  color: var(--vm-green);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--vm-green-dim);
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0.97;
+  }
+
+  5% {
+    opacity: 0.95;
+  }
+
+  10% {
+    opacity: 0.97;
+  }
+
+  15% {
+    opacity: 0.94;
+  }
+
+  20% {
+    opacity: 0.98;
+  }
+
+  100% {
+    opacity: 0.97;
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.animate-flicker {
+  animation: flicker 0.15s infinite;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-xs {
+  gap: var(--space-xs);
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.p-sm {
+  padding: var(--space-sm);
+}
+
+.p-md {
+  padding: var(--space-md);
+}
+
+.p-lg {
+  padding: var(--space-lg);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+/* Text Colors */
+.text-green {
+  color: var(--vm-green);
+}
+
+.text-red {
+  color: var(--vm-red);
+}
+
+.text-gold {
+  color: var(--vm-gold);
+}
+
+.text-white {
+  color: var(--win-white);
+}
+
+.text-black {
+  color: var(--vm-black);
+}
+
+.text-gray {
+  color: var(--win-gray-dark);
+}
+
+/* Background Colors */
+.bg-black {
+  background: var(--vm-black);
+}
+
+.bg-purple {
+  background: var(--vm-purple);
+}
+
+.bg-gray {
+  background: var(--win-gray);
+}
+
+.bg-navy {
+  background: var(--win-navy);
+}

@@ -1,0 +1,537 @@
+/* ========================================
+   Admin Window Styles
+   Windows 98 styled admin panel
+   ======================================== */
+
+.admin-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--win-gray);
+    overflow: hidden;
+}
+
+/* ===== LOGIN SCREEN ===== */
+.admin-login {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+}
+
+.admin-login-icon {
+    font-size: 48px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.admin-login h2 {
+    font-size: 16px;
+    color: var(--vm-black);
+}
+
+.admin-login-form {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* ===== HEADER ===== */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--win-gray);
+    border-bottom: 2px solid var(--win-gray-dark);
+}
+
+.admin-header h2 {
+    font-size: 14px;
+    color: var(--vm-black);
+}
+
+.admin-header-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+/* ===== ALERTS ===== */
+.admin-alert {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 12px;
+}
+
+.admin-alert-error {
+    background: #ffcccc;
+    border-bottom: 1px solid #cc0000;
+    color: #cc0000;
+}
+
+/* ===== FORM CONTAINER ===== */
+.admin-form-container {
+    padding: var(--space-md);
+    background: linear-gradient(to bottom, var(--win-gray-light) 0%, var(--win-gray) 100%);
+    border-bottom: 2px solid var(--win-gray-dark);
+}
+
+.admin-form-container h3 {
+    font-size: 12px;
+    margin-bottom: var(--space-sm);
+    color: var(--vm-black);
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.admin-form-row {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 100px;
+}
+
+.admin-form-group label {
+    font-size: 11px;
+    color: var(--vm-black);
+}
+
+.admin-form-group-venue {
+    flex: 2;
+}
+
+.admin-form-group-country {
+    max-width: 60px;
+}
+
+.admin-form-group-full {
+    flex: 1;
+    min-width: 100%;
+}
+
+.admin-form-group-checkbox {
+    flex-direction: row;
+    align-items: center;
+    min-width: auto;
+}
+
+.admin-form-group-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    cursor: pointer;
+}
+
+/* ===== INPUTS ===== */
+.admin-input {
+    padding: 4px 6px;
+    font-size: 12px;
+    font-family: inherit;
+    border: 2px solid;
+    border-color: var(--win-gray-dark) var(--win-white) var(--win-white) var(--win-gray-dark);
+    background: var(--win-white);
+    color: var(--vm-black);
+}
+
+.admin-input:focus {
+    outline: none;
+    background: #ffffcc;
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 40px;
+}
+
+/* ===== ERROR MESSAGE ===== */
+.admin-error {
+    display: block;
+    color: #cc0000;
+    font-size: 11px;
+    padding: var(--space-xs);
+    background: #ffeeee;
+}
+
+/* ===== FORM ACTIONS ===== */
+.admin-form-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+}
+
+/* ===== SHOWS LIST ===== */
+.admin-shows-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-md);
+    overflow: hidden;
+}
+
+.admin-shows-list h3 {
+    font-size: 12px;
+    margin-bottom: var(--space-sm);
+    color: var(--vm-black);
+}
+
+.admin-loading,
+.admin-empty {
+    padding: var(--space-lg);
+    text-align: center;
+    color: var(--win-gray-dark);
+    font-size: 12px;
+}
+
+/* ===== TABLE ===== */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    flex: 1;
+    overflow: auto;
+}
+
+.admin-table thead {
+    position: sticky;
+    top: 0;
+    background: var(--win-gray);
+    z-index: 1;
+}
+
+.admin-table th {
+    padding: 6px 8px;
+    text-align: left;
+    background: linear-gradient(to bottom, var(--win-gray-light) 0%, var(--win-gray) 100%);
+    border: 1px solid var(--win-gray-dark);
+    color: var(--vm-black);
+    font-weight: bold;
+}
+
+.admin-table td {
+    padding: 6px 8px;
+    background: var(--win-white);
+    border: 1px solid var(--win-gray);
+    color: var(--vm-black);
+}
+
+.admin-table tbody tr:hover td {
+    background: #ffffcc;
+}
+
+.admin-table tbody tr.row-past td {
+    background: #f0f0f0;
+    color: var(--win-gray-dark);
+}
+
+.venue-cell {
+    font-weight: bold;
+}
+
+.show-time {
+    font-size: 10px;
+    color: var(--win-gray-dark);
+}
+
+.ticket-link {
+    color: var(--vm-blue);
+    text-decoration: none;
+}
+
+.ticket-link:hover {
+    text-decoration: underline;
+}
+
+.no-tickets {
+    color: var(--win-gray-dark);
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.status-upcoming {
+    background: var(--vm-green);
+    color: var(--win-white);
+}
+
+.status-past {
+    background: var(--win-gray-dark);
+    color: var(--win-white);
+}
+
+/* ===== ACTION BUTTONS ===== */
+.actions-cell {
+    white-space: nowrap;
+}
+
+.btn-sm {
+    padding: 2px 6px !important;
+    font-size: 10px;
+}
+
+.btn-danger:hover {
+    background: #ffcccc;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .admin-window {
+        overflow-y: auto;
+    }
+
+    /* Login */
+    .admin-login {
+        padding: var(--space-md);
+    }
+
+    .admin-login-form {
+        flex-direction: column;
+        width: 100%;
+        gap: var(--space-md);
+    }
+
+    .admin-login-form .admin-input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+
+    .admin-login-form .btn-98 {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    /* Header */
+    .admin-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+    }
+
+    .admin-header h2 {
+        font-size: 13px;
+    }
+
+    .admin-header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .admin-header-actions .btn-98 {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* Form */
+    .admin-form-container {
+        padding: var(--space-sm);
+    }
+
+    .admin-form-container h3 {
+        font-size: 11px;
+    }
+
+    .admin-form-row {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .admin-form-group {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .admin-form-group-country {
+        max-width: 100%;
+    }
+
+    .admin-form-group-checkbox {
+        padding: var(--space-xs) 0;
+    }
+
+    .admin-input {
+        padding: 10px 8px;
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+
+    .admin-textarea {
+        min-height: 60px;
+    }
+
+    .admin-form-actions {
+        flex-direction: column;
+    }
+
+    .admin-form-actions .btn-98 {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    /* Shows List */
+    .admin-shows-list {
+        padding: var(--space-sm);
+        overflow-y: auto;
+    }
+
+    .admin-shows-list h3 {
+        font-size: 11px;
+    }
+
+    /* Table to Card Layout */
+    .admin-table {
+        display: block;
+        overflow-y: auto;
+    }
+
+    .admin-table thead {
+        display: none;
+    }
+
+    .admin-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .admin-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        padding: var(--space-sm);
+        background: var(--win-white);
+        border: 1px solid var(--win-gray-dark);
+        border-left: 3px solid var(--vm-red);
+        gap: var(--space-xs);
+    }
+
+    .admin-table tbody tr.row-past {
+        border-left-color: var(--win-gray-dark);
+        opacity: 0.7;
+    }
+
+    .admin-table td {
+        border: none;
+        padding: 2px 0;
+        background: transparent;
+    }
+
+    /* Date cell - full width, prominent */
+    .admin-table td:nth-child(1) {
+        width: 100%;
+        font-weight: bold;
+        font-size: 13px;
+        color: var(--vm-black);
+        order: 1;
+    }
+
+    /* Venue cell */
+    .admin-table td:nth-child(2) {
+        width: 100%;
+        font-size: 14px;
+        font-weight: bold;
+        order: 2;
+    }
+
+    /* Location cell */
+    .admin-table td:nth-child(3) {
+        width: 100%;
+        font-size: 11px;
+        color: var(--win-gray-dark);
+        order: 3;
+    }
+
+    /* Tickets cell */
+    .admin-table td:nth-child(4) {
+        order: 5;
+        flex: 1;
+    }
+
+    .admin-table td:nth-child(4) .ticket-link {
+        display: inline-block;
+        padding: 6px 12px;
+        background: var(--vm-blue);
+        color: white;
+        text-decoration: none;
+        font-size: 11px;
+        border-radius: 2px;
+    }
+
+    /* Status cell */
+    .admin-table td:nth-child(5) {
+        order: 4;
+        flex: 1;
+    }
+
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    /* Actions cell */
+    .admin-table td:nth-child(6) {
+        width: 100%;
+        display: flex;
+        gap: var(--space-sm);
+        margin-top: var(--space-xs);
+        padding-top: var(--space-sm);
+        border-top: 1px solid var(--win-gray);
+        order: 6;
+    }
+
+    .actions-cell .btn-98 {
+        flex: 1;
+        padding: 10px !important;
+        font-size: 16px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+    .admin-login-icon {
+        font-size: 36px;
+    }
+
+    .admin-header h2 {
+        font-size: 12px;
+    }
+
+    .admin-form-container h3,
+    .admin-shows-list h3 {
+        font-size: 10px;
+    }
+
+    .admin-input {
+        padding: 8px 6px;
+    }
+}

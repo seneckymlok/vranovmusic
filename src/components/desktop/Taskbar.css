@@ -1,0 +1,312 @@
+/* ========================================
+   Taskbar Styles - Windows 98
+   ======================================== */
+
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--taskbar-height);
+    background: var(--win-gray);
+    box-shadow:
+        inset 0 1px 0 var(--win-white),
+        inset 0 2px 0 var(--win-gray-light);
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    z-index: var(--z-taskbar);
+    gap: 2px;
+}
+
+/* ===== START BUTTON ===== */
+.start-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 32px;
+    padding: 2px 8px;
+    background: var(--win-gray);
+    border: none;
+    box-shadow: var(--win-border-raised);
+    cursor: pointer;
+    font-family: var(--font-system);
+    font-weight: bold;
+    font-size: 12px;
+    color: var(--vm-black);
+    transition: transform 0.1s ease;
+}
+
+.start-button:active,
+.start-button.active {
+    box-shadow: var(--win-border-sunken);
+    padding: 3px 7px 1px 9px;
+}
+
+.start-icon {
+    font-size: 18px;
+}
+
+.start-text {
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    color: var(--vm-red);
+}
+
+/* ===== DIVIDER ===== */
+.taskbar-divider {
+    width: 2px;
+    height: 24px;
+    margin: 0 4px;
+    background: linear-gradient(to right,
+            var(--win-gray-dark) 0px,
+            var(--win-gray-dark) 1px,
+            var(--win-white) 1px,
+            var(--win-white) 2px);
+}
+
+/* ===== WINDOW BUTTONS ===== */
+.taskbar-windows {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.taskbar-window-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    min-width: 120px;
+    max-width: 180px;
+    height: 28px;
+    padding: 2px 8px;
+    background: var(--win-gray);
+    border: none;
+    box-shadow: var(--win-border-raised);
+    cursor: pointer;
+    font-size: 11px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: transform 0.1s ease;
+}
+
+.taskbar-window-btn.current {
+    box-shadow: var(--win-border-sunken);
+    background: repeating-conic-gradient(var(--win-gray) 0% 25%,
+            var(--win-gray-light) 0% 50%) 50% / 2px 2px;
+}
+
+.taskbar-window-btn.minimized {
+    box-shadow: var(--win-border-raised);
+    background: var(--win-gray);
+}
+
+.taskbar-window-btn:hover {
+    background: var(--win-gray-light);
+}
+
+.taskbar-window-btn:active {
+    transform: scale(0.98);
+}
+
+.taskbar-window-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.taskbar-window-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--vm-black);
+}
+
+/* ===== ACTIVE INDICATOR DOT (Mobile) ===== */
+.taskbar-active-dot {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: var(--vm-green);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--vm-green);
+}
+
+/* ===== SYSTEM TRAY ===== */
+.system-tray {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.tray-icons {
+    display: flex;
+    gap: 4px;
+}
+
+.tray-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.1s;
+}
+
+.tray-icon:hover {
+    transform: scale(1.2);
+}
+
+.tray-clock {
+    min-width: 50px;
+    padding: 4px 8px;
+    background: var(--win-gray);
+    box-shadow: var(--win-border-sunken);
+    font-size: 12px;
+    color: var(--vm-black);
+    text-align: center;
+}
+
+/* ===== ADMIN BUTTON ===== */
+.tray-admin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: var(--win-gray);
+    border: none;
+    box-shadow: var(--win-border-raised);
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.1s ease;
+}
+
+.tray-admin-btn:hover {
+    background: var(--win-gray-light);
+}
+
+.tray-admin-btn:active {
+    box-shadow: var(--win-border-sunken);
+    transform: scale(0.95);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .taskbar {
+        height: var(--taskbar-height);
+        padding: 4px 8px;
+        gap: 4px;
+    }
+
+    .taskbar.mobile {
+        /* Safe area for home indicator */
+        padding-bottom: max(4px, env(safe-area-inset-bottom));
+    }
+
+    .start-button {
+        height: 44px;
+        padding: 6px 12px;
+        min-width: 44px;
+    }
+
+    .start-icon {
+        font-size: 22px;
+    }
+
+    .start-text {
+        font-size: 14px;
+    }
+
+    .taskbar-window-btn {
+        min-width: 48px;
+        max-width: 56px;
+        height: 44px;
+        padding: 4px;
+        justify-content: center;
+        border-radius: 4px;
+    }
+
+    /* Hide title on mobile, show only icon */
+    .taskbar-window-title {
+        display: none;
+    }
+
+    .taskbar-window-icon {
+        font-size: 20px;
+    }
+
+    .taskbar-active-dot {
+        bottom: 4px;
+        width: 8px;
+        height: 8px;
+    }
+
+    .tray-admin-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 4px;
+    }
+
+    .tray-clock {
+        min-width: 55px;
+        padding: 8px 10px;
+        font-size: 13px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .taskbar {
+        padding: 4px 6px;
+        gap: 4px;
+    }
+
+    .start-button {
+        padding: 6px 10px;
+        gap: 4px;
+    }
+
+    .start-text {
+        display: none;
+    }
+
+    .taskbar-divider {
+        margin: 0 2px;
+    }
+
+    .taskbar-window-btn {
+        min-width: 44px;
+        max-width: 52px;
+    }
+
+    .tray-clock {
+        min-width: 50px;
+        padding: 6px 8px;
+    }
+}
+
+/* ===== SAFE AREA SUPPORT ===== */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .taskbar.mobile {
+        height: calc(var(--taskbar-height) + env(safe-area-inset-bottom));
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}

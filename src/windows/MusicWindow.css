@@ -1,0 +1,271 @@
+/* ========================================
+   Music Window Styles
+   ======================================== */
+
+.music-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== PLAYER (WINAMP STYLE) ===== */
+.music-player {
+    background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+    padding: var(--space-md);
+    border-bottom: 2px solid var(--win-gray-dark);
+}
+
+.player-display {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+    padding: var(--space-sm);
+    background: var(--vm-black);
+    border: 1px solid #333;
+}
+
+.player-visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    width: 80px;
+    height: 40px;
+    background: #0a0a0a;
+    padding: 4px;
+}
+
+.visualizer-bar {
+    flex: 1;
+    background: linear-gradient(to top, var(--vm-green) 0%, var(--vm-gold) 100%);
+    animation: pulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.player-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.player-title {
+    font-size: 14px;
+    color: var(--vm-green);
+    letter-spacing: 1px;
+}
+
+.player-subtitle {
+    font-size: 10px;
+}
+
+/* Launch Player Button Section */
+.player-launch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.launch-player-btn {
+    font-size: 12px;
+    padding: 8px 20px;
+    min-width: 140px;
+    transition: all 0.15s ease;
+}
+
+.launch-player-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 255, 0, 0.3);
+}
+
+.launch-hint {
+    font-size: 10px;
+    text-align: center;
+}
+
+/* ===== STREAMING SECTION ===== */
+.streaming-section {
+    padding: var(--space-lg);
+    flex: 1;
+    overflow-y: auto;
+}
+
+.section-title {
+    font-size: 14px;
+    color: var(--win-white);
+    margin-bottom: var(--space-md);
+}
+
+.streaming-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-md);
+}
+
+.streaming-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+    border: 2px solid var(--win-gray-dark);
+    text-decoration: none;
+    color: var(--win-white);
+    transition: all 0.15s;
+}
+
+.streaming-btn:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.streaming-icon {
+    font-size: 24px;
+}
+
+.streaming-name {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ===== RELEASES SECTION ===== */
+.releases-section {
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid var(--win-gray-dark);
+}
+
+.release-card {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.release-cover {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--vm-red) 0%, var(--vm-purple) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--win-gray-dark);
+}
+
+.cover-placeholder {
+    font-family: serif;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--win-white);
+}
+
+.release-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.release-title {
+    font-size: 16px;
+    color: var(--win-white);
+}
+
+.release-type {
+    font-size: 11px;
+    color: var(--vm-green);
+}
+
+.release-date {
+    font-size: 10px;
+}
+
+/* ===== STATUS ===== */
+.music-status {
+    padding: 4px 8px;
+    background: var(--win-gray);
+    font-size: 11px;
+    color: var(--vm-black);
+    border-top: 1px solid var(--win-gray-light);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .player-display {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .player-visualizer {
+        width: 100%;
+        height: 30px;
+    }
+
+    .player-info {
+        text-align: center;
+    }
+
+    .player-controls {
+        gap: 6px;
+    }
+
+    .player-btn {
+        width: 40px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .streaming-section {
+        padding: var(--space-md);
+    }
+
+    .streaming-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+    }
+
+    .streaming-btn {
+        padding: var(--space-sm);
+        gap: var(--space-sm);
+    }
+
+    .streaming-icon {
+        font-size: 20px;
+    }
+
+    .streaming-name {
+        font-size: 11px;
+    }
+
+    .releases-section {
+        padding: var(--space-md);
+    }
+
+    .release-cover {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cover-placeholder {
+        font-size: 24px;
+    }
+
+    .release-title {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .streaming-grid {
+        grid-template-columns: 1fr;
+    }
+}

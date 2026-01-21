@@ -1,0 +1,230 @@
+/* ========================================
+   Start Menu Styles - Windows 98
+   ======================================== */
+
+.start-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-start-menu) - 1);
+}
+
+.start-menu {
+    position: fixed;
+    bottom: var(--taskbar-height);
+    left: 4px;
+    display: flex;
+    min-width: 200px;
+    background: var(--win-gray);
+    box-shadow: var(--win-border-raised);
+    z-index: var(--z-start-menu);
+    animation: slideUp 0.15s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== SIDE BANNER ===== */
+.start-menu-banner {
+    width: 24px;
+    background: linear-gradient(to top, var(--win-navy) 0%, var(--win-teal) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+.banner-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    color: var(--win-white);
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* ===== MENU ITEMS ===== */
+.start-menu-items {
+    flex: 1;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* ===== CLOSE BUTTON (Mobile) ===== */
+.start-menu-close {
+    display: none;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 6px 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-system);
+    font-size: 12px;
+    color: var(--vm-black);
+    transition: background 0.1s ease;
+}
+
+.start-menu-item:hover {
+    background: var(--win-navy);
+    color: var(--win-white);
+}
+
+.start-menu-item:active {
+    background: var(--win-teal);
+}
+
+.start-menu-item-icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+}
+
+.start-menu-item-label {
+    flex: 1;
+}
+
+/* Divider */
+.start-menu-divider {
+    height: 1px;
+    margin: 4px 8px;
+    background: linear-gradient(to right,
+            var(--win-gray-dark) 0px,
+            var(--win-gray-dark) 50%,
+            var(--win-white) 50%,
+            var(--win-white) 100%);
+    background-size: 2px 1px;
+}
+
+/* Shutdown styling */
+.start-menu-item.shutdown:hover {
+    background: var(--vm-red);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .start-menu {
+        left: 4px;
+        right: 4px;
+        min-width: auto;
+        max-width: calc(100vw - 8px);
+        max-height: calc(100vh - var(--taskbar-height) - 16px);
+        overflow-y: auto;
+    }
+
+    .start-menu.mobile {
+        /* Full drawer style */
+        left: 0;
+        right: 0;
+        max-width: 100%;
+        border-radius: 12px 12px 0 0;
+        animation: slideUpMobile 0.2s ease-out;
+    }
+
+    @keyframes slideUpMobile {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .start-menu-banner {
+        width: 28px;
+    }
+
+    .start-menu.mobile .start-menu-banner {
+        display: none;
+    }
+
+    .banner-text {
+        font-size: 12px;
+    }
+
+    /* Show close button on mobile */
+    .start-menu.mobile .start-menu-close {
+        display: flex;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 32px;
+        height: 32px;
+        align-items: center;
+        justify-content: center;
+        background: var(--win-gray);
+        border: none;
+        box-shadow: var(--win-border-raised);
+        cursor: pointer;
+        font-size: 20px;
+        color: var(--vm-black);
+        border-radius: 4px;
+        z-index: 1;
+    }
+
+    .start-menu.mobile .start-menu-close:active {
+        box-shadow: var(--win-border-sunken);
+    }
+
+    .start-menu-item {
+        padding: 14px 16px;
+        font-size: 14px;
+        min-height: 48px;
+    }
+
+    .start-menu-item-icon {
+        font-size: 26px;
+        width: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .start-menu {
+        left: 2px;
+        right: 2px;
+    }
+
+    .start-menu.mobile {
+        left: 0;
+        right: 0;
+    }
+
+    .start-menu-banner {
+        display: none;
+    }
+
+    .start-menu-item {
+        padding: 16px 20px;
+    }
+}
+
+/* ===== SAFE AREA SUPPORT ===== */
+@supports (padding: env(safe-area-inset-bottom)) {
+    @media (max-width: 768px) {
+        .start-menu.mobile {
+            bottom: calc(var(--taskbar-height) + env(safe-area-inset-bottom));
+        }
+    }
+}

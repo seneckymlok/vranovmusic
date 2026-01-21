@@ -1,0 +1,224 @@
+/* ========================================
+   Members Window Styles
+   ======================================== */
+
+.members-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== TABS ===== */
+.members-tabs {
+    display: flex;
+    background: var(--win-gray);
+    padding: 4px 4px 0;
+    gap: 2px;
+}
+
+.members-tab {
+    padding: 6px 16px;
+    background: var(--win-gray);
+    border: none;
+    box-shadow:
+        inset 1px 1px var(--win-white),
+        inset -1px 0 var(--win-gray-dark);
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    top: 1px;
+}
+
+.members-tab.active {
+    background: var(--vm-black);
+    color: var(--vm-green);
+    box-shadow:
+        inset 1px 1px var(--win-white),
+        inset -1px 0 var(--win-gray-dark),
+        inset 0 -1px var(--vm-black);
+}
+
+.members-tab:hover:not(.active) {
+    background: var(--win-gray-light);
+}
+
+/* ===== MEMBER GRID ===== */
+.members-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    overflow-y: auto;
+    background: var(--vm-black);
+}
+
+/* ===== MEMBER CARD ===== */
+.member-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(145deg, #1a1a2e 0%, #0a0a0a 100%);
+    border: 2px solid var(--win-gray-dark);
+    padding: var(--space-md);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.member-card:hover {
+    border-color: var(--vm-green);
+    transform: translateY(-2px);
+}
+
+.member-card.selected {
+    border-color: var(--vm-red);
+    box-shadow: 0 0 10px rgba(196, 30, 58, 0.5);
+}
+
+.member-photo {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--vm-purple);
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+}
+
+.member-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--vm-red);
+    font-family: var(--font-pixel);
+    background: linear-gradient(135deg, var(--vm-purple) 0%, var(--vm-black) 100%);
+}
+
+/* CRT effect on photo */
+.member-photo .scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.1) 0px,
+            rgba(0, 0, 0, 0.1) 1px,
+            transparent 1px,
+            transparent 3px);
+    pointer-events: none;
+}
+
+.member-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.member-name {
+    font-size: 14px;
+    color: var(--win-white);
+    text-align: center;
+}
+
+.member-role {
+    font-size: 10px;
+    color: var(--vm-green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===== MEMBER DETAIL ===== */
+.member-detail {
+    padding: var(--space-md);
+    background: var(--win-gray);
+    border-top: 2px solid var(--win-gray-dark);
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+}
+
+.detail-name {
+    font-size: 16px;
+    color: var(--vm-black);
+}
+
+.detail-handle {
+    font-size: 12px;
+}
+
+.detail-bio {
+    font-size: 12px;
+    color: var(--vm-black);
+    margin-bottom: var(--space-md);
+}
+
+.detail-link {
+    text-decoration: none;
+}
+
+/* ===== STATUS BAR ===== */
+.members-status {
+    padding: 4px 8px;
+    background: var(--win-gray);
+    font-size: 11px;
+    color: var(--vm-black);
+    border-top: 1px solid var(--win-gray-light);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .members-tabs {
+        flex-wrap: wrap;
+    }
+
+    .members-tab {
+        flex: 1;
+        min-width: 80px;
+        padding: 10px 12px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .members-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-sm);
+        padding: var(--space-md);
+    }
+
+    .member-card {
+        padding: var(--space-sm);
+    }
+
+    .member-photo-placeholder {
+        font-size: 36px;
+    }
+
+    .member-name {
+        font-size: 12px;
+    }
+
+    .member-role {
+        font-size: 9px;
+    }
+
+    .member-detail {
+        padding: var(--space-sm);
+    }
+
+    .detail-name {
+        font-size: 14px;
+    }
+
+    .detail-bio {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .members-tab span {
+        font-size: 10px;
+    }
+}

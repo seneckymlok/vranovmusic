@@ -1,0 +1,208 @@
+/* ========================================
+   Connect Window Styles
+   ======================================== */
+
+.connect-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.section-title {
+    font-size: 14px;
+    color: var(--win-white);
+    margin-bottom: var(--space-md);
+}
+
+/* ===== SOCIALS ===== */
+.socials-section {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--win-gray-dark);
+}
+
+.socials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--win-gray);
+    box-shadow: var(--win-border-raised);
+    text-decoration: none;
+    color: var(--vm-black);
+    font-size: 12px;
+    transition: all 0.1s;
+}
+
+.social-btn:hover {
+    background: var(--win-navy);
+    color: var(--win-white);
+}
+
+.social-btn:active {
+    box-shadow: var(--win-border-sunken);
+}
+
+.social-icon {
+    font-size: 18px;
+}
+
+/* ===== BOOKING ===== */
+.booking-section {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--win-gray-dark);
+}
+
+.booking-card {
+    padding: var(--space-md);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--win-gray-dark);
+}
+
+.booking-card p {
+    font-size: 12px;
+    color: var(--win-gray);
+    margin-bottom: var(--space-sm);
+}
+
+.booking-email {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.booking-email:hover {
+    text-decoration: underline;
+}
+
+/* ===== CONTACT FORM ===== */
+.contact-section {
+    flex: 1;
+    padding: var(--space-lg);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 12px;
+    color: var(--win-gray);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.form-success {
+    font-size: 12px;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== STATUS ===== */
+.connect-status {
+    padding: 4px 8px;
+    background: var(--win-gray);
+    font-size: 11px;
+    color: var(--vm-black);
+    border-top: 1px solid var(--win-gray-light);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .socials-section {
+        padding: var(--space-md);
+    }
+
+    .socials-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .social-btn {
+        padding: var(--space-md);
+        font-size: 13px;
+    }
+
+    .social-icon {
+        font-size: 20px;
+    }
+
+    .booking-section {
+        padding: var(--space-md);
+    }
+
+    .booking-email {
+        font-size: 13px;
+        word-break: break-all;
+    }
+
+    .contact-section {
+        padding: var(--space-md);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+        /* Prevents iOS zoom on focus */
+        padding: 8px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .form-success {
+        text-align: center;
+        margin-top: var(--space-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-card p {
+        font-size: 11px;
+    }
+}

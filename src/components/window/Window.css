@@ -1,0 +1,422 @@
+/* ========================================
+   Window Component Styles - Windows 98
+   ======================================== */
+
+.window {
+    display: flex;
+    flex-direction: column;
+    background: var(--win-gray);
+    box-shadow: var(--win-border-raised);
+    min-width: 200px;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.window.dragging {
+    opacity: 0.95;
+    cursor: grabbing;
+}
+
+.window.resizing {
+    user-select: none;
+}
+
+/* ===== RESIZE HANDLES ===== */
+.resize-handle {
+    position: absolute;
+    z-index: 10;
+}
+
+/* Edge handles - 6px wide/tall hit area */
+.resize-n {
+    top: 0;
+    left: 8px;
+    right: 8px;
+    height: 6px;
+    cursor: n-resize;
+}
+
+.resize-s {
+    bottom: 0;
+    left: 8px;
+    right: 8px;
+    height: 6px;
+    cursor: s-resize;
+}
+
+.resize-e {
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 6px;
+    cursor: e-resize;
+}
+
+.resize-w {
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 6px;
+    cursor: w-resize;
+}
+
+/* Corner handles - 12px square hit area */
+.resize-ne {
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    cursor: ne-resize;
+}
+
+.resize-nw {
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    cursor: nw-resize;
+}
+
+.resize-se {
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    cursor: se-resize;
+}
+
+.resize-sw {
+    bottom: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    cursor: sw-resize;
+}
+
+/* ===== MOBILE WINDOW ANIMATIONS ===== */
+@keyframes windowSlideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0.8;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes windowSlideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100%);
+        opacity: 0.8;
+    }
+}
+
+.window.mobile {
+    will-change: transform;
+}
+
+.window.mobile.entering {
+    animation: windowSlideUp 0.25s ease-out forwards;
+}
+
+.window.mobile.exiting {
+    animation: windowSlideDown 0.2s ease-in forwards;
+}
+
+/* ===== TITLE BAR ===== */
+.window-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--titlebar-height);
+    padding: 2px 3px;
+    background: linear-gradient(90deg, var(--win-navy) 0%, var(--win-teal) 100%);
+    cursor: grab;
+    user-select: none;
+    flex-shrink: 0;
+    transition: background 0.15s ease;
+}
+
+.window-titlebar:active {
+    cursor: grabbing;
+}
+
+.window-titlebar.swiping {
+    background: linear-gradient(90deg, var(--win-teal) 0%, var(--vm-green-dim) 100%);
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--win-white);
+    font-weight: bold;
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.window-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.window-title-text {
+    font-family: var(--font-pixel);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== WINDOW CONTROLS ===== */
+.window-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.window-btn {
+    width: 16px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--win-gray);
+    border: none;
+    box-shadow: var(--win-border-raised);
+    cursor: pointer;
+    font-family: var(--font-system);
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--vm-black);
+    padding: 0;
+    transition: transform 0.1s ease;
+}
+
+.window-btn:active {
+    box-shadow: var(--win-border-sunken);
+    transform: scale(0.95);
+}
+
+.window-btn span {
+    line-height: 1;
+}
+
+.window-btn-close:hover {
+    background: var(--vm-red);
+    color: var(--win-white);
+}
+
+.window-btn-minimize span {
+    margin-bottom: -4px;
+}
+
+.window-btn-maximize span {
+    font-size: 8px;
+}
+
+.window-btn-close span {
+    font-size: 14px;
+    margin-top: -2px;
+}
+
+/* ===== SWIPE INDICATOR (Mobile) ===== */
+.window-swipe-indicator {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--vm-green);
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* ===== SWIPE HANDLE (Mobile) ===== */
+.window-swipe-handle {
+    display: none;
+}
+
+/* ===== CONTENT AREA ===== */
+.window-content {
+    flex: 1;
+    background: var(--vm-black);
+    margin: 3px;
+    box-shadow: var(--win-border-sunken);
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: var(--win-white);
+}
+
+/* Content padding utility */
+.window-content-padded {
+    padding: var(--space-lg);
+}
+
+/* ===== MENU BAR (optional) ===== */
+.window-menubar {
+    display: flex;
+    gap: 0;
+    padding: 2px 4px;
+    background: var(--win-gray);
+    border-bottom: 1px solid var(--win-gray-dark);
+}
+
+.window-menubar button {
+    background: transparent;
+    border: none;
+    padding: 2px 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.window-menubar button:hover {
+    background: var(--win-navy);
+    color: var(--win-white);
+}
+
+/* ===== STATUS BAR (optional) ===== */
+.window-statusbar {
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    background: var(--win-gray);
+    border-top: 1px solid var(--win-gray-light);
+    font-size: 11px;
+    color: var(--vm-black);
+    min-height: 20px;
+}
+
+.window-statusbar-section {
+    padding: 0 8px;
+    border-right: 1px solid var(--win-gray-dark);
+}
+
+.window-statusbar-section:last-child {
+    border-right: none;
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .window {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .window.mobile {
+        border-radius: 12px 12px 0 0;
+        box-shadow:
+            var(--win-border-raised),
+            0 -4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .window-titlebar {
+        height: 48px;
+        padding: 8px 12px;
+        touch-action: none;
+        cursor: default;
+    }
+
+    .window-title-text {
+        font-size: 14px;
+    }
+
+    .window-icon {
+        font-size: 18px;
+    }
+
+    .window-controls {
+        gap: 6px;
+    }
+
+    .window-btn {
+        width: 36px;
+        height: 32px;
+        font-size: 16px;
+        border-radius: 4px;
+    }
+
+    .window-btn-minimize span {
+        margin-bottom: 0;
+        font-size: 20px;
+    }
+
+    .window-btn-maximize span {
+        font-size: 14px;
+    }
+
+    .window-btn-close span {
+        font-size: 22px;
+        margin-top: 0;
+    }
+
+    /* Swipe handle visible on mobile */
+    .window-swipe-handle {
+        display: flex;
+        justify-content: center;
+        padding: 6px 0;
+        background: var(--win-gray);
+        border-bottom: 1px solid var(--win-gray-dark);
+    }
+
+    .swipe-handle-bar {
+        width: 40px;
+        height: 4px;
+        background: var(--win-gray-dark);
+        border-radius: 2px;
+    }
+
+    .window-content {
+        margin: 2px;
+        /* Prevent iOS bounce scroll */
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .window-content-padded {
+        padding: var(--space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .window-titlebar {
+        height: 44px;
+        padding: 6px 10px;
+    }
+
+    .window-btn {
+        width: 38px;
+        height: 34px;
+    }
+
+    .window-title-text {
+        font-size: 13px;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* ===== SAFE AREA SUPPORT ===== */
+@supports (padding: env(safe-area-inset-bottom)) {
+    @media (max-width: 768px) {
+        .window.mobile {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    }
+}

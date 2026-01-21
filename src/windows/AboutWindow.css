@@ -1,0 +1,172 @@
+/* ========================================
+   About Window Styles
+   ======================================== */
+
+.about-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    overflow-y: auto;
+}
+
+.about-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+/* VM Logo Image */
+.about-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+}
+
+.about-logo-image {
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Content */
+.about-content {
+    text-align: center;
+    flex: 1;
+}
+
+.about-title {
+    font-size: 28px;
+    color: var(--win-white);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 4px;
+}
+
+.about-subtitle {
+    font-size: 14px;
+    color: var(--vm-green);
+    letter-spacing: 6px;
+    margin-bottom: var(--space-xs);
+}
+
+.about-tagline {
+    font-size: 11px;
+    color: var(--win-gray-dark);
+    letter-spacing: 3px;
+}
+
+.about-divider {
+    width: 60%;
+    height: 1px;
+    margin: var(--space-lg) auto;
+    background: linear-gradient(to right,
+            transparent,
+            var(--vm-gold) 20%,
+            var(--vm-gold) 80%,
+            transparent);
+}
+
+.about-description {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--win-gray);
+    max-width: 400px;
+    margin: 0 auto var(--space-lg);
+}
+
+/* Stats */
+.about-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-lg);
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.stat-value {
+    font-family: var(--font-pixel);
+    font-size: 24px;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--win-gray-dark);
+    letter-spacing: 2px;
+}
+
+/* Silhouettes */
+.about-silhouettes {
+    max-width: 320px;
+    margin: 0 auto;
+    margin-top: -80px;
+    /* Pull image up aggressively */
+    overflow: hidden;
+}
+
+.silhouettes-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Crop the transparent top portion of the PNG */
+    margin-top: -100px;
+}
+
+/* Footer */
+.about-footer {
+    padding-top: var(--space-md);
+    text-align: center;
+    border-top: 1px solid var(--win-gray-dark);
+    color: var(--vm-green);
+    font-size: 12px;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .about-window {
+        padding: var(--space-md);
+    }
+
+    .about-logo-image {
+        width: 110px;
+    }
+
+    .about-title {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    .about-subtitle {
+        font-size: 12px;
+        letter-spacing: 4px;
+    }
+
+    .about-stats {
+        gap: var(--space-lg);
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .about-description {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-stats {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .about-silhouettes {
+        max-width: 250px;
+    }
+}

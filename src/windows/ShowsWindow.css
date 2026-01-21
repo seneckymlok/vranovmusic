@@ -1,0 +1,232 @@
+/* ========================================
+   Shows Window Styles
+   ======================================== */
+
+.shows-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HEADER ===== */
+.shows-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md);
+    background: var(--win-gray);
+    border-bottom: 2px solid var(--win-gray-dark);
+}
+
+.shows-header h2 {
+    font-size: 16px;
+    color: var(--vm-black);
+}
+
+/* ===== SHOWS LIST ===== */
+.shows-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.shows-empty {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== SHOW ITEM ===== */
+.show-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: linear-gradient(90deg, #1a1a2e 0%, var(--vm-black) 100%);
+    border: 1px solid var(--win-gray-dark);
+    border-left: 3px solid var(--vm-red);
+}
+
+.show-item:hover {
+    border-left-color: var(--vm-green);
+}
+
+/* Date Block */
+.show-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+    padding: var(--space-sm);
+    background: var(--vm-red);
+    color: var(--win-white);
+}
+
+.show-date-day {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.show-date-month {
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.show-date-year {
+    font-size: 9px;
+    opacity: 0.7;
+}
+
+/* Venue Info */
+.show-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.show-venue {
+    font-size: 16px;
+    color: var(--win-white);
+}
+
+.show-location {
+    font-size: 12px;
+    color: var(--win-gray-dark);
+}
+
+/* Ticket Button */
+.show-ticket {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.show-past-badge {
+    padding: 4px 12px;
+    font-size: 10px;
+    color: var(--win-gray-dark);
+    border: 1px solid var(--win-gray-dark);
+}
+
+/* ===== MINI CALENDAR ===== */
+.shows-calendar {
+    padding: var(--space-md);
+    background: var(--win-gray);
+    border-top: 2px solid var(--win-gray-light);
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    color: var(--vm-black);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    font-size: 10px;
+    text-align: center;
+}
+
+.calendar-day-label {
+    color: var(--win-gray-dark);
+    padding: 2px;
+}
+
+.calendar-day {
+    padding: 4px;
+    background: var(--win-white);
+    color: var(--vm-black);
+}
+
+.calendar-day.has-show {
+    background: var(--vm-red);
+    color: var(--win-white);
+    font-weight: bold;
+}
+
+/* ===== STATUS ===== */
+.shows-status {
+    padding: 4px 8px;
+    background: var(--win-gray);
+    font-size: 11px;
+    color: var(--vm-black);
+    border-top: 1px solid var(--win-gray-light);
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .shows-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+    }
+
+    .shows-header h2 {
+        font-size: 14px;
+    }
+
+    .shows-list {
+        padding: var(--space-sm);
+    }
+
+    .show-item {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+    }
+
+    .show-date {
+        min-width: 50px;
+        padding: var(--space-xs);
+    }
+
+    .show-date-day {
+        font-size: 18px;
+    }
+
+    .show-date-month {
+        font-size: 9px;
+    }
+
+    .show-venue {
+        font-size: 14px;
+    }
+
+    .show-location {
+        font-size: 11px;
+    }
+
+    .show-ticket {
+        width: 100%;
+        text-align: center;
+        margin-top: var(--space-xs);
+    }
+
+    .shows-calendar {
+        padding: var(--space-sm);
+    }
+
+    .calendar-grid {
+        font-size: 9px;
+    }
+
+    .calendar-day {
+        padding: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .show-date {
+        min-width: 45px;
+    }
+
+    .show-date-day {
+        font-size: 16px;
+    }
+}
