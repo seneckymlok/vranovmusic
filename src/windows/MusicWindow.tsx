@@ -1,8 +1,37 @@
-import React from 'react';
-import { streamingLinks } from '../data/links';
+import React, { useState } from 'react';
 import './MusicWindow.css';
 
+interface Artist {
+    id: string;
+    name: string;
+    spotify: string;
+    appleMusic: string;
+}
+
+const ARTISTS: Artist[] = [
+    {
+        id: '44lex',
+        name: '44LEX',
+        spotify: 'https://open.spotify.com/artist/5iZTYBhlfr88ZIwTYCZgdb',
+        appleMusic: 'https://music.apple.com/sk/artist/44lex/1652573906',
+    },
+    {
+        id: 'sushislime',
+        name: 'SUSHISLIME',
+        spotify: 'https://open.spotify.com/artist/6gzOCUTX3igvLapUbJinDh',
+        appleMusic: 'https://music.apple.com/sk/artist/sushislime/1738278360',
+    },
+    {
+        id: 'pudge',
+        name: 'PUDGE',
+        spotify: 'https://open.spotify.com/artist/5hA4e3qNO5vbDnG0t6okYM',
+        appleMusic: 'https://music.apple.com/sk/artist/pudge/1471355405',
+    },
+];
+
 export const MusicWindow: React.FC = () => {
+    const [selectedArtist, setSelectedArtist] = useState<Artist>(ARTISTS[0]);
+
     // Function to open the Webamp player
     const handleLaunchPlayer = () => {
         // Dispatch custom event to open player window
@@ -42,44 +71,50 @@ export const MusicWindow: React.FC = () => {
                 </div>
             </div>
 
-            {/* Streaming Links */}
-            <div className="streaming-section">
-                <h3 className="section-title pixel-text">📡 STREAMING PLATFORMS</h3>
-                <div className="streaming-grid">
-                    {streamingLinks.map(link => (
-                        <a
-                            key={link.name}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="streaming-btn"
-                            style={{ '--accent-color': link.color } as React.CSSProperties}
+            {/* Artist Selection */}
+            <div className="artist-section">
+                <h3 className="section-title pixel-text">🎤 SELECT ARTIST</h3>
+                <div className="artist-tabs">
+                    {ARTISTS.map(artist => (
+                        <button
+                            key={artist.id}
+                            className={`artist-tab ${selectedArtist.id === artist.id ? 'active' : ''}`}
+                            onClick={() => setSelectedArtist(artist)}
                         >
-                            <span className="streaming-icon">{link.icon}</span>
-                            <span className="streaming-name">{link.name}</span>
-                        </a>
+                            <span className="pixel-text">{artist.name}</span>
+                        </button>
                     ))}
                 </div>
             </div>
 
-            {/* Recent Release */}
-            <div className="releases-section">
-                <h3 className="section-title pixel-text">💿 LATEST RELEASE</h3>
-                <div className="release-card">
-                    <div className="release-cover">
-                        <span className="cover-placeholder">VM</span>
-                    </div>
-                    <div className="release-info">
-                        <span className="release-title pixel-text">COMING SOON</span>
-                        <span className="release-type">NEW MUSIC 2026</span>
-                        <span className="release-date text-gray">Stay tuned...</span>
-                    </div>
+            {/* Streaming Links for Selected Artist */}
+            <div className="streaming-section">
+                <h3 className="section-title pixel-text">📡 LISTEN TO {selectedArtist.name}</h3>
+                <div className="streaming-grid">
+                    <a
+                        href={selectedArtist.spotify}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="streaming-btn spotify"
+                    >
+                        <span className="streaming-icon">🎵</span>
+                        <span className="streaming-name">Spotify</span>
+                    </a>
+                    <a
+                        href={selectedArtist.appleMusic}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="streaming-btn apple"
+                    >
+                        <span className="streaming-icon">🍎</span>
+                        <span className="streaming-name">Apple Music</span>
+                    </a>
                 </div>
             </div>
 
             {/* Status bar */}
             <div className="music-status">
-                <span>{streamingLinks.length} platforms connected</span>
+                <span>Listening to {selectedArtist.name}</span>
             </div>
         </div>
     );

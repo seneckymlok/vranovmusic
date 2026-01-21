@@ -73,6 +73,14 @@
     overflow-y: auto;
 }
 
+.archive-empty {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2xl);
+}
+
 /* ===== ARCHIVE ITEM ===== */
 .archive-item {
     display: flex;
@@ -141,8 +149,9 @@
     .folder-btn {
         flex: 1;
         min-width: 70px;
-        padding: 8px 10px;
-        font-size: 10px;
+        min-height: 44px;
+        padding: 12px 10px;
+        font-size: 11px;
         justify-content: center;
     }
 

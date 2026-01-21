@@ -156,12 +156,13 @@
     }
 
     .social-btn {
-        padding: var(--space-md);
-        font-size: 13px;
+        padding: var(--space-lg) var(--space-md);
+        font-size: 14px;
+        min-height: 52px;
     }
 
     .social-icon {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .booking-section {

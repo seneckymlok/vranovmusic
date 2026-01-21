@@ -215,6 +215,14 @@
     .detail-bio {
         font-size: 11px;
     }
+
+    .detail-link {
+        min-height: 44px;
+        padding: 12px 16px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {

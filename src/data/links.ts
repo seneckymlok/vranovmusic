@@ -40,19 +40,9 @@ export const socialLinks: SocialLink[] = [
         icon: '📷',
     },
     {
-        name: 'TikTok',
-        url: 'https://tiktok.com/@vranovmusic',
-        icon: '🎬',
-    },
-    {
         name: 'YouTube',
-        url: 'https://youtube.com/@vranovmusic',
+        url: 'https://www.youtube.com/@VranovMusiic',
         icon: '📺',
-    },
-    {
-        name: 'Twitter/X',
-        url: 'https://twitter.com/vranovmusic',
-        icon: '🐦',
     },
 ];
 

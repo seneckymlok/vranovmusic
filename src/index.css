@@ -90,6 +90,17 @@
     --titlebar-height: 40px;
     --icon-size: 56px;
   }
+
+  /* Ensure all buttons meet touch target requirements */
+  .btn-98 {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .btn-98:active {
+    transform: scale(0.98);
+  }
 }
 
 /* ===== GLOBAL STYLES ===== */

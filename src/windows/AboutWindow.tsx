@@ -24,9 +24,6 @@ export const AboutWindow: React.FC = () => {
                 <p className="about-description">
                     Vranov Music is an underground music collective from Slovakia,
                     bringing raw energy and authentic sound from the heart of Middle Europe.
-                    <br /><br />
-                    Founded by a group of artists, producers, and visionaries united by
-                    their passion for pushing boundaries and creating something real.
                 </p>
 
                 <div className="about-stats">

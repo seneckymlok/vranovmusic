@@ -93,6 +93,51 @@
     text-align: center;
 }
 
+/* ===== ARTIST SECTION ===== */
+.artist-section {
+    padding: var(--space-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--win-gray-dark);
+}
+
+.artist-tabs {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.artist-tab {
+    flex: 1;
+    padding: var(--space-md) var(--space-lg);
+    background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+    border: 2px solid var(--win-gray-dark);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.artist-tab span {
+    color: var(--win-gray);
+    font-size: 13px;
+}
+
+.artist-tab:hover {
+    border-color: var(--vm-gold);
+    transform: translateY(-1px);
+}
+
+.artist-tab:hover span {
+    color: var(--win-white);
+}
+
+.artist-tab.active {
+    background: linear-gradient(180deg, var(--vm-red) 0%, #6b1a1a 100%);
+    border-color: var(--vm-red);
+}
+
+.artist-tab.active span {
+    color: var(--win-white);
+}
+
 /* ===== STREAMING SECTION ===== */
 .streaming-section {
     padding: var(--space-lg);
@@ -108,85 +153,49 @@
 
 .streaming-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
 }
 
 .streaming-btn {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-md);
-    padding: var(--space-md);
-    background: linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%);
+    padding: var(--space-lg);
     border: 2px solid var(--win-gray-dark);
     text-decoration: none;
     color: var(--win-white);
     transition: all 0.15s;
 }
 
-.streaming-btn:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+.streaming-btn.spotify {
+    background: linear-gradient(135deg, #1DB954 0%, #0d5c2a 100%);
+    border-color: #1DB954;
+}
+
+.streaming-btn.spotify:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(29, 185, 84, 0.4);
+}
+
+.streaming-btn.apple {
+    background: linear-gradient(135deg, #FA243C 0%, #7a121e 100%);
+    border-color: #FA243C;
+}
+
+.streaming-btn.apple:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(250, 36, 60, 0.4);
 }
 
 .streaming-icon {
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .streaming-name {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
-}
-
-/* ===== RELEASES SECTION ===== */
-.releases-section {
-    padding: var(--space-lg);
-    background: rgba(0, 0, 0, 0.3);
-    border-top: 1px solid var(--win-gray-dark);
-}
-
-.release-card {
-    display: flex;
-    gap: var(--space-md);
-}
-
-.release-cover {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--vm-red) 0%, var(--vm-purple) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--win-gray-dark);
-}
-
-.cover-placeholder {
-    font-family: serif;
-    font-style: italic;
-    font-size: 32px;
-    color: var(--win-white);
-}
-
-.release-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-}
-
-.release-title {
-    font-size: 16px;
-    color: var(--win-white);
-}
-
-.release-type {
-    font-size: 11px;
-    color: var(--vm-green);
-}
-
-.release-date {
-    font-size: 10px;
 }
 
 /* ===== STATUS ===== */
@@ -214,14 +223,13 @@
         text-align: center;
     }
 
-    .player-controls {
-        gap: 6px;
+    .artist-tabs {
+        flex-direction: column;
     }
 
-    .player-btn {
-        width: 40px;
-        height: 32px;
-        font-size: 14px;
+    .artist-tab {
+        padding: var(--space-md) var(--space-md);
+        min-height: 48px;
     }
 
     .streaming-section {
@@ -229,43 +237,20 @@
     }
 
     .streaming-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
         gap: var(--space-sm);
     }
 
     .streaming-btn {
-        padding: var(--space-sm);
+        padding: var(--space-md);
         gap: var(--space-sm);
     }
 
     .streaming-icon {
-        font-size: 20px;
-    }
-
-    .streaming-name {
-        font-size: 11px;
-    }
-
-    .releases-section {
-        padding: var(--space-md);
-    }
-
-    .release-cover {
-        width: 60px;
-        height: 60px;
-    }
-
-    .cover-placeholder {
         font-size: 24px;
     }
 
-    .release-title {
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 480px) {
-    .streaming-grid {
-        grid-template-columns: 1fr;
+    .streaming-name {
+        font-size: 13px;
     }
 }
