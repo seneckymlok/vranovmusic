@@ -144,7 +144,7 @@ export const Desktop: React.FC = () => {
                             alt="Vranov Music"
                             className="wallpaper-logo-image"
                         />
-                        <span className="wallpaper-tagline">MIDDLE EUROPE CONTINENT.</span>
+                        <span className="wallpaper-tagline">MIDDLE EUROPE CONTINENT .</span>
                     </div>
                 </div>
 
