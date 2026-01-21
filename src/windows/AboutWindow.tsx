@@ -28,7 +28,7 @@ export const AboutWindow: React.FC = () => {
 
                 <div className="about-stats">
                     <div className="stat">
-                        <span className="stat-value text-green">7+</span>
+                        <span className="stat-value text-green">7</span>
                         <span className="stat-label">ARTISTS</span>
                     </div>
                     <div className="stat">
