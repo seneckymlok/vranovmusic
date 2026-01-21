@@ -8,7 +8,7 @@ export const members: Member[] = [
         handle: '@44lex.exe',
         role: 'Spitter',
         category: 'spitters',
-        bio: 'Raw energy and pure lyrical flow.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/44lex.exe',
         },
@@ -19,18 +19,18 @@ export const members: Member[] = [
         handle: '@sushiislime',
         role: 'Spitter',
         category: 'spitters',
-        bio: 'East meets West in every bar.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/sushiislime',
         },
     },
     {
         id: 'vranovcrevo',
-        name: 'VRANOV CREVO',
+        name: 'Pudge',
         handle: '@vranovcrevo',
         role: 'Spitter',
         category: 'spitters',
-        bio: 'The heart of the collective.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/vranovcrevo',
         },
@@ -43,7 +43,7 @@ export const members: Member[] = [
         handle: '@noeliiizi',
         role: 'Producer',
         category: 'producers',
-        bio: 'Crafting the sonic landscape.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/noeliiizi',
         },
@@ -54,7 +54,7 @@ export const members: Member[] = [
         handle: '@bohacdaniell',
         role: 'Producer',
         category: 'producers',
-        bio: 'Beats that hit different.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/bohacdaniell',
         },
@@ -67,7 +67,7 @@ export const members: Member[] = [
         handle: '@smargiela7',
         role: 'Executive Producer',
         category: 'crew',
-        bio: 'Vision and direction.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/smargiela7',
         },
@@ -78,7 +78,7 @@ export const members: Member[] = [
         handle: '@danky_kubis',
         role: 'Executive Producer',
         category: 'crew',
-        bio: 'Making moves behind the scenes.',
+        bio: '',
         links: {
             instagram: 'https://instagram.com/danky_kubis',
         },

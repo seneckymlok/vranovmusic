@@ -87,33 +87,7 @@ export const ShowsWindow: React.FC = () => {
                 )}
             </div>
 
-            {/* Mini Calendar */}
-            <div className="shows-calendar">
-                <div className="calendar-header">
-                    <span className="pixel-text">JANUARY 2026</span>
-                </div>
-                <div className="calendar-grid">
-                    {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-                        <span key={day} className="calendar-day-label">{day}</span>
-                    ))}
-                    {/* Simplified calendar - just showing structure */}
-                    {[...Array(31)].map((_, i) => {
-                        const day = i + 1;
-                        const hasShow = upcomingShows.some(s => {
-                            const showDate = new Date(s.date);
-                            return showDate.getDate() === day && showDate.getMonth() === 0;
-                        });
-                        return (
-                            <span
-                                key={i}
-                                className={`calendar-day ${hasShow ? 'has-show' : ''}`}
-                            >
-                                {day}
-                            </span>
-                        );
-                    })}
-                </div>
-            </div>
+
 
             {/* Status */}
             <div className="shows-status">

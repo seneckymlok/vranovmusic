@@ -34,12 +34,14 @@
 
 /* ===== SIDE BANNER ===== */
 .start-menu-banner {
-    width: 24px;
+    width: 28px;
+    min-width: 28px;
     background: linear-gradient(to top, var(--win-navy) 0%, var(--win-teal) 100%);
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding-bottom: 8px;
+    padding-bottom: 12px;
+    overflow: hidden;
 }
 
 .banner-text {
@@ -47,8 +49,10 @@
     text-orientation: mixed;
     transform: rotate(180deg);
     color: var(--win-white);
-    font-size: 14px;
-    letter-spacing: 2px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    line-height: 1;
 }
 
 /* ===== MENU ITEMS ===== */

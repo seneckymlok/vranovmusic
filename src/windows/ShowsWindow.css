@@ -112,44 +112,6 @@
     border: 1px solid var(--win-gray-dark);
 }
 
-/* ===== MINI CALENDAR ===== */
-.shows-calendar {
-    padding: var(--space-md);
-    background: var(--win-gray);
-    border-top: 2px solid var(--win-gray-light);
-}
-
-.calendar-header {
-    text-align: center;
-    margin-bottom: var(--space-sm);
-    color: var(--vm-black);
-}
-
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-    font-size: 10px;
-    text-align: center;
-}
-
-.calendar-day-label {
-    color: var(--win-gray-dark);
-    padding: 2px;
-}
-
-.calendar-day {
-    padding: 4px;
-    background: var(--win-white);
-    color: var(--vm-black);
-}
-
-.calendar-day.has-show {
-    background: var(--vm-red);
-    color: var(--win-white);
-    font-weight: bold;
-}
-
 /* ===== STATUS ===== */
 .shows-status {
     padding: 4px 8px;
@@ -206,18 +168,6 @@
         width: 100%;
         text-align: center;
         margin-top: var(--space-xs);
-    }
-
-    .shows-calendar {
-        padding: var(--space-sm);
-    }
-
-    .calendar-grid {
-        font-size: 9px;
-    }
-
-    .calendar-day {
-        padding: 2px;
     }
 }
 
