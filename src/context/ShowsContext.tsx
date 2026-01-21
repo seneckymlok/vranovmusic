@@ -46,11 +46,10 @@ const showToRow = (show: Omit<Show, 'id'>): Omit<ShowRow, 'id' | 'created_at' | 
 });
 
 export const ShowsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [shows, setShows] = useState<Show[]>(defaultShows);
+    // Initialize with empty array when Supabase is configured, otherwise use default shows
+    const [shows, setShows] = useState<Show[]>(isSupabaseConfigured ? [] : defaultShows);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
-
 
     // Fetch shows from Supabase
     const fetchShows = useCallback(async () => {
@@ -69,16 +68,19 @@ export const ShowsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
             if (fetchError) throw fetchError;
 
-            if (data && data.length > 0) {
-                setShows(data.map(rowToShow));
-            }
+            // Always use Supabase data when connected (even if empty array)
+            setShows(data ? data.map(rowToShow) : []);
         } catch (err) {
             console.error('Error fetching shows:', err);
             setError(err instanceof Error ? err.message : 'Failed to fetch shows');
+            // On error, fall back to default shows if we have no data
+            if (shows.length === 0) {
+                setShows(defaultShows);
+            }
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [shows.length]);
 
     // Initial fetch
     useEffect(() => {

@@ -51,15 +51,6 @@ export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, items, is
                             <span className="start-menu-item-label">{item.label}</span>
                         </button>
                     ))}
-
-                    {/* Divider */}
-                    <div className="start-menu-divider" />
-
-                    {/* Shutdown option (just for fun) */}
-                    <button className="start-menu-item shutdown">
-                        <span className="start-menu-item-icon">⏻</span>
-                        <span className="start-menu-item-label">Shut Down...</span>
-                    </button>
                 </div>
             </div>
         </>
