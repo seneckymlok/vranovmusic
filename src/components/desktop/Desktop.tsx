@@ -14,6 +14,7 @@ import { MusicWindow } from '../../windows/MusicWindow';
 import { ConnectWindow } from '../../windows/ConnectWindow';
 import { AdminWindow } from '../../windows/AdminWindow';
 import { GameWindow } from '../../windows/GameWindow';
+import { GambleWindow } from '../../windows/GambleWindow';
 import { AudioPlayer } from '../player/AudioPlayer';
 import './Desktop.css';
 
@@ -27,11 +28,12 @@ interface DesktopIconConfig {
 const DESKTOP_ICONS: DesktopIconConfig[] = [
     { id: 'icon-vm', label: 'VM.exe', icon: '💿', windowId: 'about' },
     { id: 'icon-members', label: 'MEMBERS', icon: '👥', windowId: 'members' },
+    { id: 'icon-music', label: 'MUSIC', icon: '🎵', windowId: 'music' },
+    { id: 'icon-player', label: 'PLAYER.exe', icon: '🎧', windowId: 'player' },
     { id: 'icon-shows', label: 'SHOWS', icon: '🎤', windowId: 'shows' },
     { id: 'icon-archive', label: 'ARCHIVE', icon: '📁', windowId: 'archive' },
-    { id: 'icon-music', label: 'MUSIC', icon: '🎵', windowId: 'music' },
     { id: 'icon-game', label: 'VINYL SNAKE', icon: '🐍', windowId: 'game' },
-    { id: 'icon-player', label: 'PLAYER.exe', icon: '🎧', windowId: 'player' },
+    { id: 'icon-gamble', label: 'SLOTS', icon: '🎰', windowId: 'gamble' },
     { id: 'icon-connect', label: 'CONNECT', icon: '📡', windowId: 'connect' },
 ];
 
@@ -53,6 +55,8 @@ const WindowContent: React.FC<{ windowId: string }> = ({ windowId }) => {
             return <AudioPlayer />;
         case 'game':
             return <GameWindow />;
+        case 'gamble':
+            return <GambleWindow />;
         case 'admin':
             return <AdminWindow />;
         default:

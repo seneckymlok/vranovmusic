@@ -15,6 +15,7 @@ const INITIAL_WINDOWS: WindowConfig[] = [
     { id: 'archive', title: 'ARCHIVE.exe', icon: '📁', defaultSize: { width: 650, height: 500 } },
     { id: 'music', title: 'MUSIC.exe', icon: '🎵', defaultSize: { width: 450, height: 400 } },
     { id: 'game', title: 'VINYL SNAKE.exe', icon: '🐍', defaultSize: { width: 500, height: 600 } },
+    { id: 'gamble', title: 'SLOTS.exe', icon: '🎰', defaultSize: { width: 450, height: 600 } },
     { id: 'player', title: 'PLAYER.exe', icon: '🎧', defaultSize: { width: 550, height: 400 } },
     { id: 'connect', title: 'CONNECT.exe', icon: '📡', defaultSize: { width: 400, height: 450 } },
     { id: 'admin', title: 'ADMIN.exe', icon: '⚙️', defaultSize: { width: 700, height: 550 } },
