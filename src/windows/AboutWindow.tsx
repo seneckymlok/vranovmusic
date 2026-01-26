@@ -51,7 +51,7 @@ export const AboutWindow: React.FC = () => {
             </div>
 
             <div className="about-footer">
-                <span className="mono-text">vranovmusic@gmail.com</span>
+                <span className="mono-text">info@vranovmusic.eu</span>
             </div>
         </div>
     );
