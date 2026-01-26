@@ -59,7 +59,7 @@
 
 /* Logo image styling - prominent and polished */
 .wallpaper-logo-image {
-    width: 280px;
+    width: 600px;
     height: auto;
     object-fit: contain;
     /* Subtle shadow for depth against both sides */
@@ -112,7 +112,7 @@
     }
 
     .wallpaper-logo-image {
-        width: 200px;
+        width: 400px;
     }
 
     .wallpaper-tagline {
@@ -129,7 +129,7 @@
     }
 
     .wallpaper-logo-image {
-        width: 160px;
+        width: 300px;
     }
 }
 
@@ -139,7 +139,7 @@
     }
 
     .wallpaper-logo-image {
-        width: 140px;
+        width: 240px;
     }
 }
 

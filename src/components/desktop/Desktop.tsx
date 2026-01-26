@@ -13,6 +13,7 @@ import { ArchiveWindow } from '../../windows/ArchiveWindow';
 import { MusicWindow } from '../../windows/MusicWindow';
 import { ConnectWindow } from '../../windows/ConnectWindow';
 import { AdminWindow } from '../../windows/AdminWindow';
+import { GameWindow } from '../../windows/GameWindow';
 import { AudioPlayer } from '../player/AudioPlayer';
 import './Desktop.css';
 
@@ -29,6 +30,7 @@ const DESKTOP_ICONS: DesktopIconConfig[] = [
     { id: 'icon-shows', label: 'SHOWS', icon: '🎤', windowId: 'shows' },
     { id: 'icon-archive', label: 'ARCHIVE', icon: '📁', windowId: 'archive' },
     { id: 'icon-music', label: 'MUSIC', icon: '🎵', windowId: 'music' },
+    { id: 'icon-game', label: 'VINYL SNAKE', icon: '🐍', windowId: 'game' },
     { id: 'icon-player', label: 'PLAYER.exe', icon: '🎧', windowId: 'player' },
     { id: 'icon-connect', label: 'CONNECT', icon: '📡', windowId: 'connect' },
 ];
@@ -49,6 +51,8 @@ const WindowContent: React.FC<{ windowId: string }> = ({ windowId }) => {
             return <ConnectWindow />;
         case 'player':
             return <AudioPlayer />;
+        case 'game':
+            return <GameWindow />;
         case 'admin':
             return <AdminWindow />;
         default:
