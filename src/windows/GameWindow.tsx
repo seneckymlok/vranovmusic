@@ -230,6 +230,22 @@ export const GameWindow: React.FC = () => {
         };
     }, [gameState.speed, gameState.isGameOver, gameState.isPaused, moveSnake]);
 
+    const handleDirection = useCallback((newDir: Direction) => {
+        setGameState(prev => {
+            if (prev.isPaused || prev.isGameOver) return prev;
+
+            const currentDir = prev.direction;
+
+            // Prevent reversing
+            if (newDir === 'UP' && currentDir === 'DOWN') return prev;
+            if (newDir === 'DOWN' && currentDir === 'UP') return prev;
+            if (newDir === 'LEFT' && currentDir === 'RIGHT') return prev;
+            if (newDir === 'RIGHT' && currentDir === 'LEFT') return prev;
+
+            return { ...prev, nextDirection: newDir };
+        });
+    }, []);
+
     // Keyboard controls
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -246,40 +262,29 @@ export const GameWindow: React.FC = () => {
                 return;
             }
 
-            // Prevent reversing into self
-            const { direction } = gameState;
-
             switch (e.key) {
                 case 'ArrowUp':
                     e.preventDefault();
-                    if (direction !== 'DOWN') {
-                        setGameState(prev => ({ ...prev, nextDirection: 'UP' }));
-                    }
+                    handleDirection('UP');
                     break;
                 case 'ArrowDown':
                     e.preventDefault();
-                    if (direction !== 'UP') {
-                        setGameState(prev => ({ ...prev, nextDirection: 'DOWN' }));
-                    }
+                    handleDirection('DOWN');
                     break;
                 case 'ArrowLeft':
                     e.preventDefault();
-                    if (direction !== 'RIGHT') {
-                        setGameState(prev => ({ ...prev, nextDirection: 'LEFT' }));
-                    }
+                    handleDirection('LEFT');
                     break;
                 case 'ArrowRight':
                     e.preventDefault();
-                    if (direction !== 'LEFT') {
-                        setGameState(prev => ({ ...prev, nextDirection: 'RIGHT' }));
-                    }
+                    handleDirection('RIGHT');
                     break;
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [gameState.direction, gameState.isGameOver, resetGame]);
+    }, [gameState.isGameOver, resetGame, handleDirection]);
 
     return (
         <div className="game-window">
@@ -401,6 +406,19 @@ export const GameWindow: React.FC = () => {
                 <span>SPACE Pause</span>
                 <span>R Restart</span>
             </div>
-        </div>
+
+
+            {/* Mobile Controls */}
+            <div className="game-mobile-controls">
+                <div className="dpad-row">
+                    <button className="dpad-btn" onPointerDown={() => handleDirection('UP')}>▲</button>
+                </div>
+                <div className="dpad-row">
+                    <button className="dpad-btn" onPointerDown={() => handleDirection('LEFT')}>◀</button>
+                    <button className="dpad-btn" onPointerDown={() => handleDirection('DOWN')}>▼</button>
+                    <button className="dpad-btn" onPointerDown={() => handleDirection('RIGHT')}>▶</button>
+                </div>
+            </div>
+        </div >
     );
 };
