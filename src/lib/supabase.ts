@@ -38,3 +38,46 @@ export interface ShowRow {
     created_at: string;
     updated_at: string;
 }
+
+export interface FolderRow {
+    id: string;
+    name: string;
+    category: 'photos' | 'videos' | 'flyers';
+    created_at: string;
+}
+
+export interface PhotoRow {
+    id: string;
+    folder_id: string;
+    title: string;
+    url: string;
+    thumbnail_url: string | null;
+    created_at: string;
+}
+
+export interface ArchiveFolderRow {
+    id: string;
+    name: string;
+    description: string | null;
+    category: 'photos' | 'videos' | 'flyers';
+    event_date: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface ArchivePhotoRow {
+    id: string;
+    folder_id: string;
+    title: string;
+    description: string | null;
+    photo_date: string | null;
+    url: string;
+    thumbnail_url: string | null;
+    file_size: number | null;
+    display_order: number;
+    created_at: string;
+    updated_at: string;
+}
+
+// Storage bucket name for archive photos
+export const ARCHIVE_STORAGE_BUCKET = 'archive-photos';

@@ -5,6 +5,7 @@ import { StartMenu } from './StartMenu';
 import { Window } from '../window/Window';
 import { useWindowManager } from '../../hooks/useWindowManager';
 import { ShowsProvider } from '../../context/ShowsContext';
+import { ArchiveProvider } from '../../context/ArchiveContext';
 import { AboutWindow } from '../../windows/AboutWindow';
 import { MembersWindow } from '../../windows/MembersWindow';
 import { ShowsWindow } from '../../windows/ShowsWindow';
@@ -135,75 +136,77 @@ export const Desktop: React.FC = () => {
 
     return (
         <ShowsProvider>
-            <div className={`desktop ${isMobile ? 'mobile' : ''}`} onClick={handleDesktopClick}>
-                {/* Desktop Wallpaper - Split Black/White with Logo */}
-                <div className="desktop-wallpaper">
-                    <div className="wallpaper-logo">
-                        <img
-                            src="/vm-logo.png"
-                            alt="Vranov Music"
-                            className="wallpaper-logo-image"
-                        />
-                        <span className="wallpaper-tagline">MIDDLE EUROPE CONTINENT .</span>
+            <ArchiveProvider>
+                <div className={`desktop ${isMobile ? 'mobile' : ''}`} onClick={handleDesktopClick}>
+                    {/* Desktop Wallpaper - Split Black/White with Logo */}
+                    <div className="desktop-wallpaper">
+                        <div className="wallpaper-logo">
+                            <img
+                                src="/vm-logo.png"
+                                alt="Vranov Music"
+                                className="wallpaper-logo-image"
+                            />
+                            <span className="wallpaper-tagline">MIDDLE EUROPE CONTINENT .</span>
+                        </div>
                     </div>
-                </div>
 
-                {/* Desktop Icons */}
-                <div className="desktop-icons">
-                    {DESKTOP_ICONS.map((icon, index) => (
-                        <DesktopIcon
-                            key={icon.id}
-                            id={icon.id}
-                            label={icon.label}
-                            icon={icon.icon}
-                            isSelected={selectedIcon === icon.id}
-                            onClick={() => isMobile ? handleIconInteraction(icon.windowId) : setSelectedIcon(icon.id)}
-                            onDoubleClick={() => handleIconInteraction(icon.windowId)}
+                    {/* Desktop Icons */}
+                    <div className="desktop-icons">
+                        {DESKTOP_ICONS.map((icon, index) => (
+                            <DesktopIcon
+                                key={icon.id}
+                                id={icon.id}
+                                label={icon.label}
+                                icon={icon.icon}
+                                isSelected={selectedIcon === icon.id}
+                                onClick={() => isMobile ? handleIconInteraction(icon.windowId) : setSelectedIcon(icon.id)}
+                                onDoubleClick={() => handleIconInteraction(icon.windowId)}
+                                isMobile={isMobile}
+                                index={index}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Windows - all windows now use standard Window component */}
+                    {windows.map(win => (
+                        <Window
+                            key={win.id}
+                            window={win}
+                            onClose={() => closeWindow(win.id)}
+                            onMinimize={() => minimizeWindow(win.id)}
+                            onMaximize={() => maximizeWindow(win.id)}
+                            onFocus={() => focusWindow(win.id)}
+                            onPositionChange={(pos) => updatePosition(win.id, pos)}
+                            onSizeChange={(size) => updateSize(win.id, size)}
                             isMobile={isMobile}
-                            index={index}
-                        />
+                        >
+                            <WindowContent windowId={win.id} />
+                        </Window>
                     ))}
-                </div>
 
-                {/* Windows - all windows now use standard Window component */}
-                {windows.map(win => (
-                    <Window
-                        key={win.id}
-                        window={win}
-                        onClose={() => closeWindow(win.id)}
-                        onMinimize={() => minimizeWindow(win.id)}
-                        onMaximize={() => maximizeWindow(win.id)}
-                        onFocus={() => focusWindow(win.id)}
-                        onPositionChange={(pos) => updatePosition(win.id, pos)}
-                        onSizeChange={(size) => updateSize(win.id, size)}
+                    {/* Start Menu */}
+                    <StartMenu
+                        isOpen={isStartMenuOpen}
+                        onClose={() => setIsStartMenuOpen(false)}
+                        items={startMenuItems}
                         isMobile={isMobile}
-                    >
-                        <WindowContent windowId={win.id} />
-                    </Window>
-                ))}
+                    />
 
-                {/* Start Menu */}
-                <StartMenu
-                    isOpen={isStartMenuOpen}
-                    onClose={() => setIsStartMenuOpen(false)}
-                    items={startMenuItems}
-                    isMobile={isMobile}
-                />
+                    {/* Taskbar */}
+                    <Taskbar
+                        windows={windows}
+                        onWindowClick={handleWindowClick}
+                        onStartClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
+                        onAdminClick={() => openWindow('admin')}
+                        isStartMenuOpen={isStartMenuOpen}
+                        activeWindowId={activeWindow?.id}
+                        isMobile={isMobile}
+                    />
 
-                {/* Taskbar */}
-                <Taskbar
-                    windows={windows}
-                    onWindowClick={handleWindowClick}
-                    onStartClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
-                    onAdminClick={() => openWindow('admin')}
-                    isStartMenuOpen={isStartMenuOpen}
-                    activeWindowId={activeWindow?.id}
-                    isMobile={isMobile}
-                />
-
-                {/* CRT Overlay Effect */}
-                <div className="crt-overlay" />
-            </div>
+                    {/* CRT Overlay Effect */}
+                    <div className="crt-overlay" />
+                </div>
+            </ArchiveProvider>
         </ShowsProvider>
     );
 };

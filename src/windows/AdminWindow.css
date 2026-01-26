@@ -57,6 +57,8 @@
     padding: var(--space-sm) var(--space-md);
     background: var(--win-gray);
     border-bottom: 2px solid var(--win-gray-dark);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
 }
 
 .admin-header h2 {
@@ -67,6 +69,38 @@
 .admin-header-actions {
     display: flex;
     gap: var(--space-sm);
+}
+
+/* ===== TABS ===== */
+.admin-tabs {
+    display: flex;
+    gap: 2px;
+}
+
+.admin-tab {
+    padding: 6px 16px;
+    font-size: 12px;
+    font-family: inherit;
+    font-weight: bold;
+    background: linear-gradient(to bottom, var(--win-gray-light) 0%, var(--win-gray) 100%);
+    border: 2px solid;
+    border-color: var(--win-white) var(--win-gray-dark) var(--win-gray-dark) var(--win-white);
+    border-bottom: none;
+    cursor: pointer;
+    color: var(--vm-black);
+    transition: all 0.1s;
+}
+
+.admin-tab:hover {
+    background: linear-gradient(to bottom, var(--win-white) 0%, var(--win-gray-light) 100%);
+}
+
+.admin-tab.active {
+    background: var(--win-gray);
+    border-color: var(--win-white) var(--win-gray-dark) transparent var(--win-white);
+    position: relative;
+    bottom: -2px;
+    padding-bottom: 8px;
 }
 
 /* ===== ALERTS ===== */

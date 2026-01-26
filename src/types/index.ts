@@ -70,4 +70,26 @@ export interface Release {
   streamingLinks: StreamingLink[];
 }
 
+export interface ArchiveFolder {
+  id: string;
+  name: string;
+  description?: string;
+  category: 'photos' | 'videos' | 'flyers';
+  eventDate?: string; // ISO date string
+  createdAt: string;
+  updatedAt?: string;
+}
 
+export interface ArchivePhoto {
+  id: string;
+  folderId: string;
+  title: string;
+  description?: string;
+  photoDate?: string; // ISO date string
+  url: string;
+  thumbnailUrl?: string;
+  fileSize?: number; // bytes
+  displayOrder: number;
+  createdAt: string;
+  updatedAt?: string;
+}
