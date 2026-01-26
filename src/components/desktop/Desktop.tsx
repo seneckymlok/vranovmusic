@@ -167,8 +167,11 @@ export const Desktop: React.FC = () => {
                                 label={icon.label}
                                 icon={icon.icon}
                                 isSelected={selectedIcon === icon.id}
-                                onClick={() => isMobile ? handleIconInteraction(icon.windowId) : setSelectedIcon(icon.id)}
-                                onDoubleClick={() => handleIconInteraction(icon.windowId)}
+                                onClick={() => {
+                                    setSelectedIcon(icon.id);
+                                    handleIconInteraction(icon.windowId);
+                                }}
+                                onDoubleClick={() => { }}
                                 isMobile={isMobile}
                                 index={index}
                             />
