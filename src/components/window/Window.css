@@ -214,11 +214,12 @@
 }
 
 .window-btn-minimize span {
-    margin-bottom: -4px;
+    margin-bottom: 3px;
 }
 
 .window-btn-maximize span {
-    font-size: 8px;
+    font-size: 14px;
+    margin-bottom: 3px;
 }
 
 .window-btn-close span {
