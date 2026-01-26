@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { getBrowserFingerprint } from '../utils/fingerprint';
 import './GambleWindow.css';
 
 // Symbols for the slot machine
 const SYMBOLS = ['💿', '🐍', '💀', '🎤', '👁️', '7️⃣'];
 const DISCOUNT_CODE = 'VRANOV_STYLE_25';
 const WIN_CHANCE = 0.001; // 0.1% chance - Extremely small as requested
-// const WIN_CHANCE = 0.5; // Testing only
 
 interface GambleState {
     spinsRemaining: number;
@@ -16,11 +17,60 @@ export const GambleWindow: React.FC = () => {
     const [reels, setReels] = useState<string[]>(['7️⃣', '7️⃣', '7️⃣']);
     const [isSpinning, setIsSpinning] = useState(false);
     const [message, setMessage] = useState<string>('PRESS SPIN TO PLAY');
-    const [spinsLeft, setSpinsLeft] = useState<number>(3);
+    const [spinsLeft, setSpinsLeft] = useState<number>(3); // Default display
     const [winType, setWinType] = useState<'none' | 'win' | 'lose'>('none');
+    const [visitorId, setVisitorId] = useState<string>('');
 
-    // Load state from local storage
+    // Initialize: Get ID and Check Spins
     useEffect(() => {
+        const init = async () => {
+            // 1. Identify User
+            const fp = await getBrowserFingerprint();
+            setVisitorId(fp);
+
+            // 2. Check Spins (Server or Local)
+            if (isSupabaseConfigured && supabase) {
+                checkServerSpins(fp);
+            } else {
+                checkLocalSpins();
+            }
+        };
+        init();
+    }, []);
+
+    // Check spins from Supabase
+    const checkServerSpins = async (fp: string) => {
+        if (!supabase) return;
+
+        try {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayISO = today.toISOString();
+
+            const { count, error } = await supabase
+                .from('gamble_spins')
+                .select('*', { count: 'exact', head: true })
+                .eq('visitor_id', fp)
+                .gte('created_at', todayISO);
+
+            if (error) throw error;
+
+            const usedSpins = count || 0;
+            const remaining = Math.max(0, 3 - usedSpins);
+            setSpinsLeft(remaining);
+
+            if (remaining === 0) {
+                setMessage('NO SPINS LEFT TODAY');
+            }
+        } catch (err) {
+            console.error('Error fetching spins:', err);
+            // Fallback to local if server fails
+            checkLocalSpins();
+        }
+    };
+
+    // Fallback: Local Storage Check
+    const checkLocalSpins = () => {
         const today = new Date().toDateString();
         const savedState = localStorage.getItem('vranov_gamble_state');
 
@@ -28,17 +78,16 @@ export const GambleWindow: React.FC = () => {
             const parsed: GambleState = JSON.parse(savedState);
             if (parsed.lastSpinDate === today) {
                 setSpinsLeft(parsed.spinsRemaining);
+                if (parsed.spinsRemaining === 0) setMessage('NO SPINS LEFT TODAY');
             } else {
-                // New day, reset spins
-                resetSpins(today);
+                resetLocalSpins(today);
             }
         } else {
-            // First time
-            resetSpins(today);
+            resetLocalSpins(today);
         }
-    }, []);
+    };
 
-    const resetSpins = (dateString: string) => {
+    const resetLocalSpins = (dateString: string) => {
         const newState: GambleState = {
             spinsRemaining: 3,
             lastSpinDate: dateString
@@ -47,8 +96,7 @@ export const GambleWindow: React.FC = () => {
         localStorage.setItem('vranov_gamble_state', JSON.stringify(newState));
     };
 
-    const updateSpins = (newSpins: number) => {
-        setSpinsLeft(newSpins);
+    const updateLocalSpins = (newSpins: number) => {
         const newState: GambleState = {
             spinsRemaining: newSpins,
             lastSpinDate: new Date().toDateString()
@@ -56,15 +104,25 @@ export const GambleWindow: React.FC = () => {
         localStorage.setItem('vranov_gamble_state', JSON.stringify(newState));
     };
 
-    const spin = () => {
+    const spin = async () => {
         if (spinsLeft <= 0 || isSpinning) return;
 
         setIsSpinning(true);
         setMessage('SPINNING...');
         setWinType('none');
 
-        // consume spin
-        updateSpins(spinsLeft - 1);
+        // Optimistic Update
+        const newSpins = spinsLeft - 1;
+        setSpinsLeft(newSpins);
+
+        // Record Spin (Fire and Forget/Await based on strictness)
+        if (isSupabaseConfigured && supabase && visitorId) {
+            await supabase.from('gamble_spins').insert({
+                visitor_id: visitorId
+            });
+        }
+        // Always update mirror local for offline safety/UX
+        updateLocalSpins(newSpins);
 
         // Determine outcome immediately
         const isWin = Math.random() < WIN_CHANCE;
@@ -72,10 +130,9 @@ export const GambleWindow: React.FC = () => {
         let finalReels: string[];
         if (isWin) {
             // Force winning combination
-            finalReels = ['7️⃣', '7️⃣', '7️⃣']; // Or snake, or CD
+            finalReels = ['7️⃣', '7️⃣', '7️⃣'];
         } else {
             // Generate random losing combination
-            // Ensure it's not a winning one if we are very unlucky to roll it randomly
             do {
                 finalReels = [
                     SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
@@ -86,7 +143,6 @@ export const GambleWindow: React.FC = () => {
         }
 
         // Animation sequence
-        // We will shuffle displayed symbols rapidly
         const spinDuration = 2000; // 2 seconds
         const intervalTime = 100;
         let elapsed = 0;
@@ -166,3 +222,4 @@ export const GambleWindow: React.FC = () => {
         </div>
     );
 };
+
