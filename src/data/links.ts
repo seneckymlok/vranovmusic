@@ -46,5 +46,5 @@ export const socialLinks: SocialLink[] = [
     },
 ];
 
-export const bookingEmail = 'vranovmusic@gmail.com';
+export const bookingEmail = 'info@vranovmusic.eu';
 export const gooutLink = 'https://goout.net/sk/vranov-music+hostia/szqwcfy';
