@@ -100,6 +100,10 @@
         bottom: var(--taskbar-height);
     }
 
+    .wallpaper-logo {
+        top: 65%;
+    }
+
     .desktop-icons {
         grid-auto-flow: row;
         grid-template-columns: repeat(4, 1fr);
