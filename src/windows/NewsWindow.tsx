@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchNewsPosts, likeNewsPost, type NewsPost } from '../lib/supabase';
 import { CommentsSection } from '../components/news/CommentsSection';
+import { ImageGallery } from '../components/news/ImageGallery';
 import './NewsWindow.css';
 
 export const NewsWindow: React.FC = () => {
@@ -33,31 +34,33 @@ export const NewsWindow: React.FC = () => {
     return (
         <div className="news-window">
             <div className="news-header-bar">
-                <span className="blink">● LIVE TRANSMISSION</span>
-                <span>VRANOV_NEWS_V1.0</span>
+                <div className="news-header-title">
+                    <span>📰</span>
+                    <span>BREAKING NEWS</span>
+                </div>
+                <div className="news-header-date">
+                    {new Date().toLocaleDateString()}
+                </div>
             </div>
 
             <div className="news-feed">
                 {loading && posts.length === 0 ? (
-                    <div className="news-loading pixel-text">SEARCHING_SIGNAL...</div>
+                    <div className="news-loading">Updating feeds...</div>
                 ) : posts.length === 0 ? (
-                    <div className="news-empty pixel-text">NO SIGNAL DETECTED.</div>
+                    <div className="news-empty">No headlines available.</div>
                 ) : (
-                    posts.map(post => (
+                    posts.map((post) => (
                         <article key={post.id} className="news-card">
                             <div className="news-card-header">
-                                <span className="news-id">ID: {post.id.slice(0, 8)}</span>
-                                <span className="news-date">
-                                    {new Date(post.created_at).toLocaleString()}
-                                </span>
+                                <span>{post.title}</span>
+                                <span>{new Date(post.created_at).toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                             </div>
 
-                            {post.image_url && (
-                                <div className="news-image-container">
-                                    <img src={post.image_url} alt={post.title} className="news-image" loading="lazy" />
-                                    <div className="scanline-overlay"></div>
-                                </div>
-                            )}
+                            {/* Images */}
+                            <ImageGallery
+                                images={post.image_urls || (post.image_url ? [post.image_url] : [])}
+                                altText={post.title}
+                            />
 
                             <div className="news-content">
                                 <h2 className="news-title">{post.title}</h2>
@@ -71,7 +74,6 @@ export const NewsWindow: React.FC = () => {
                                 >
                                     ❤️ {post.likes}
                                 </button>
-                                <span className="news-share">SHARE.EXE</span>
                             </div>
 
                             <CommentsSection postId={post.id} />

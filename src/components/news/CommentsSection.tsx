@@ -61,20 +61,21 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({ postId }) => {
     return (
         <div className="news-comments-section">
             <button className="btn-98 btn-sm comment-toggle-btn" onClick={handleToggle}>
-                {isOpen ? '🔼 HIDE REPLIES' : `🔽 REPLIES ${comments.length > 0 ? `(${comments.length})` : ''}`}
+                {isOpen ? 'Close Comments' : `View Comments ${comments.length > 0 ? `(${comments.length})` : ''}`}
             </button>
 
             {isOpen && (
                 <div className="comments-container">
                     {loading ? (
-                        <div className="comments-loading">Loading data...</div>
+                        <div className="comments-loading">Loading...</div>
                     ) : (
                         <div className="comments-list">
                             {comments.map(c => (
                                 <div key={c.id} className="comment-item">
                                     <div className="comment-header">
                                         <span className="comment-author">{c.author_name}</span>
-                                        <span className="comment-time">{new Date(c.created_at).toLocaleTimeString()}</span>
+                                        <span>•</span>
+                                        <span className="comment-time">{new Date(c.created_at).toLocaleDateString()}</span>
                                     </div>
                                     <div className="comment-body">{c.content}</div>
                                 </div>
@@ -88,28 +89,27 @@ export const CommentsSection: React.FC<CommentsSectionProps> = ({ postId }) => {
                             type="text"
                             value={newComment}
                             onChange={e => setNewComment(e.target.value)}
-                            placeholder="Type a reply..."
-                            className="comment-input"
+                            placeholder="Write a comment..."
+                            className="input-98 comment-input"
                         />
-                        <button type="submit" className="btn-98 btn-sm">SEND</button>
+                        <button type="submit" className="btn-98 btn-sm">Post</button>
                     </form>
 
-                    {/* Identity Prompt Modal (Inline) */}
                     {isNamePromptOpen && (
                         <div className="identity-modal-overlay">
-                            <div className="identity-modal window-border">
-                                <div className="identity-header">IDENTIFY YOURSELF</div>
+                            <div className="identity-modal window-panel">
+                                <div className="identity-header">User Identification</div>
                                 <form onSubmit={handleNameSubmit} className="identity-form">
-                                    <label>CALLSIGN:</label>
+                                    <label>Enter Display Name:</label>
                                     <input
                                         type="text"
                                         value={authorName}
                                         onChange={e => setAuthorName(e.target.value)}
-                                        className="identity-input"
+                                        className="input-98 identity-input"
                                         autoFocus
-                                        placeholder="e.g. USER_01"
+                                        placeholder="Name..."
                                     />
-                                    <button type="submit" className="btn-98 btn-block">CONFIRM</button>
+                                    <button type="submit" className="btn-98 btn-block">Set Name</button>
                                 </form>
                             </div>
                         </div>

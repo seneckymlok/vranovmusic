@@ -452,7 +452,9 @@
     /* Shows List */
     .admin-shows-list {
         padding: var(--space-sm);
-        overflow-y: auto;
+        flex: none;
+        height: auto;
+        overflow: visible;
     }
 
     .admin-shows-list h3 {

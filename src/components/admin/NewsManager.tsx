@@ -12,7 +12,7 @@ export const NewsManager: React.FC = () => {
     // Form State
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
 
     const loadPosts = async () => {
         setLoading(true);
@@ -25,6 +25,17 @@ export const NewsManager: React.FC = () => {
         loadPosts();
     }, []);
 
+    // Stats calculation
+    const totalPosts = posts.length;
+    const totalLikes = posts.reduce((sum, p) => sum + (p.likes || 0), 0);
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            // Convert FileList to Array
+            setImageFiles(Array.from(e.target.files));
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!title.trim() || !content.trim()) return;
@@ -32,14 +43,26 @@ export const NewsManager: React.FC = () => {
         setSubmitting(true);
         setError('');
 
-        let uploadedImageUrl: string | undefined = undefined;
+        const uploadedUrls: string[] = [];
 
-        if (imageFile) {
-            const url = await uploadNewsImage(imageFile);
-            if (url) {
-                uploadedImageUrl = url;
-            } else {
-                setError('Failed to upload image.');
+        // Upload images if any
+        if (imageFiles.length > 0) {
+            try {
+                // Upload all files in parallel
+                const uploadPromises = imageFiles.map(file => uploadNewsImage(file));
+                const results = await Promise.all(uploadPromises);
+
+                // Filter out nulls and collect valid URLs
+                results.forEach(url => {
+                    if (url) uploadedUrls.push(url);
+                });
+
+                if (uploadedUrls.length !== imageFiles.length) {
+                    setError('Warning: Some images failed to upload.');
+                }
+            } catch (err) {
+                console.error(err);
+                setError('Failed to upload images.');
                 setSubmitting(false);
                 return;
             }
@@ -48,7 +71,9 @@ export const NewsManager: React.FC = () => {
         const newPost = {
             title: title.trim(),
             content: content.trim(),
-            image_url: uploadedImageUrl,
+            // Ensure we save the first image as legacy image_url for safety
+            image_url: uploadedUrls.length > 0 ? uploadedUrls[0] : undefined,
+            image_urls: uploadedUrls,
         };
 
         const result = await createNewsPost(newPost);
@@ -57,8 +82,8 @@ export const NewsManager: React.FC = () => {
             // Success
             setTitle('');
             setContent('');
-            setImageFile(null);
-            // Reset file input manually if needed, or rely on state
+            setImageFiles([]);
+            // Reset file input manually
             const fileInput = document.getElementById('news-file-input') as HTMLInputElement;
             if (fileInput) fileInput.value = '';
 
@@ -83,91 +108,111 @@ export const NewsManager: React.FC = () => {
 
     return (
         <div className="admin-news-manager">
-            {/* Create Post Form */}
-            <div className="admin-form-container">
-                <h3 className="pixel-text">📡 NEW TRANSMISSION</h3>
-                <form onSubmit={handleSubmit} className="admin-form">
-                    <div className="admin-form-group">
-                        <label>Headline *</label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                            className="admin-input"
-                            placeholder="BREAKING NEWS..."
-                            required
-                        />
-                    </div>
+            {/* Dashboard Stats */}
+            <div className="admin-stats-bar">
+                <div className="stat-item">
+                    <span className="stat-label">Total Posts</span>
+                    <span className="stat-value">{totalPosts}</span>
+                </div>
+                <div className="stat-item">
+                    <span className="stat-label">Total Likes</span>
+                    <span className="stat-value">{totalLikes}</span>
+                </div>
+            </div>
 
-                    <div className="admin-form-group">
-                        <label>Attach Image (Optional)</label>
-                        <input
-                            id="news-file-input"
-                            type="file"
-                            accept="image/*"
-                            onChange={e => setImageFile(e.target.files ? e.target.files[0] : null)}
-                            className="admin-input"
-                        />
-                    </div>
+            <div className="admin-content-split">
+                {/* LEFT: Editor Panel */}
+                <div className="admin-editor-panel">
+                    <h3 className="admin-panel-title">Post Editor</h3>
+                    <form onSubmit={handleSubmit} className="admin-form">
+                        <div className="admin-form-group">
+                            <label>Headline</label>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={e => setTitle(e.target.value)}
+                                className="input-98"
+                                placeholder="Enter headline..."
+                                required
+                            />
+                        </div>
 
-                    <div className="admin-form-group">
-                        <label>Content *</label>
-                        <textarea
-                            value={content}
-                            onChange={e => setContent(e.target.value)}
-                            className="admin-input admin-textarea"
-                            rows={4}
-                            placeholder="Write your message here..."
-                            required
-                        />
-                    </div>
+                        <div className="admin-form-group">
+                            <label>Images (Optional - Select Multiple)</label>
+                            <input
+                                id="news-file-input"
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handleFileSelect}
+                                className="input-98"
+                            />
+                            {imageFiles.length > 0 && (
+                                <div style={{ fontSize: '11px', color: '#666', marginTop: '4px' }}>
+                                    Selected: {imageFiles.length} file(s)
+                                </div>
+                            )}
+                        </div>
 
-                    {error && <span className="admin-error">{error}</span>}
+                        <div className="admin-form-group">
+                            <label>Content</label>
+                            <textarea
+                                value={content}
+                                onChange={e => setContent(e.target.value)}
+                                className="input-98 admin-textarea"
+                                rows={8}
+                                placeholder="Article content..."
+                                required
+                            />
+                        </div>
 
-                    <div className="admin-form-actions">
+                        {error && <span className="admin-error">{error}</span>}
+
                         <button
                             type="submit"
                             className="btn-98 btn-98-primary"
                             disabled={submitting}
+                            style={{ width: '100%', marginTop: '8px' }}
                         >
-                            {submitting ? 'SENDING...' : '📣 PUBLISH'}
+                            {submitting ? 'Publishing...' : 'Publish Article'}
                         </button>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
 
-            {/* Posts List */}
-            <div className="admin-shows-list">
-                <h3 className="pixel-text">🗄️ TRANSMISSION LOGS ({posts.length})</h3>
-                {loading ? (
-                    <div className="admin-loading">Loading feeds...</div>
-                ) : posts.length === 0 ? (
-                    <div className="admin-empty">No transmissions found. Start broadcasting!</div>
-                ) : (
-                    <div className="news-admin-list">
-                        {posts.map(post => (
-                            <div key={post.id} className="news-admin-item">
-                                <div className="news-admin-header">
-                                    <span className="news-admin-date">
+                {/* RIGHT: Logs Panel */}
+                <div className="admin-logs-panel">
+                    <h3 className="admin-panel-title">Posted Articles</h3>
+                    {loading ? (
+                        <div className="admin-loading">Loading...</div>
+                    ) : posts.length === 0 ? (
+                        <div className="admin-empty">No posts yet.</div>
+                    ) : (
+                        <div className="admin-logs-list">
+                            {posts.map(post => (
+                                <div key={post.id} className="admin-log-item">
+                                    {post.image_url ? (
+                                        <img src={post.image_url} className="log-thumb" alt="" />
+                                    ) : (
+                                        <div className="log-thumb" style={{ background: '#eee' }}></div>
+                                    )}
+                                    <span className="log-date">
                                         {new Date(post.created_at).toLocaleDateString()}
                                     </span>
-                                    <span className="news-admin-likes">❤️ {post.likes}</span>
+                                    <span className="log-title">{post.title}</span>
+                                    <span className="log-meta">❤️ {post.likes}</span>
+
+                                    <button
+                                        className="btn-98 btn-danger btn-sm"
+                                        style={{ marginLeft: 'auto' }}
+                                        onClick={() => handleDelete(post.id)}
+                                    >
+                                        Del
+                                    </button>
                                 </div>
-                                <h4 className="news-admin-title">{post.title}</h4>
-                                <div className="news-admin-preview">
-                                    {post.image_url && <span className="news-has-image">🖼️</span>}
-                                    {post.content.substring(0, 60)}...
-                                </div>
-                                <button
-                                    className="btn-98 btn-danger btn-sm news-delete-btn"
-                                    onClick={() => handleDelete(post.id)}
-                                >
-                                    🗑️ DELETE
-                                </button>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

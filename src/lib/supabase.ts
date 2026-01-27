@@ -88,7 +88,8 @@ export interface NewsPost {
     id: string;
     title: string;
     content: string;
-    image_url?: string;
+    image_url?: string; // Kept for backward compatibility
+    image_urls?: string[]; // New multi-image support
     likes: number;
     created_at: string;
 }

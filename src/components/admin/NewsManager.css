@@ -1,48 +1,183 @@
-/* In AdminWindow.css usually, but we can append or make a new file if needed. 
-   Currently importing AdminWindow.css, so let's add these styles there. */
+/* ========================================
+   ADMIN NEWS MANAGER - STANDARD WIN98
+   ======================================== */
 
-.news-admin-list {
+.admin-news-manager {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    background: var(--win-gray);
+    font-family: var(--font-system);
+    padding: 8px;
+    gap: 8px;
 }
 
-.news-admin-item {
-    background: var(--win-white);
-    border: 2px solid var(--win-gray-dark);
-    padding: var(--space-md);
-    color: var(--vm-black);
+/* ===== DASHBOARD STATS ===== */
+.admin-stats-bar {
+    display: flex;
+    gap: 12px;
+    padding: 8px;
+    background: var(--win-gray-light);
+    border: 2px groove var(--win-white);
+    margin-bottom: 4px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+}
+
+.stat-label {
+    color: var(--win-gray-dark);
+}
+
+.stat-value {
+    font-weight: bold;
+    color: #000;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.admin-content-split {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    overflow: hidden;
+}
+
+/* LEFT: EDITOR PANEL */
+.admin-editor-panel {
+    width: 350px;
+    background: var(--win-gray);
+    border: 2px groove var(--win-white);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.admin-panel-title {
+    font-size: 12px;
+    background: var(--win-navy);
+    color: #fff;
+    padding: 2px 4px;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-form-group {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    position: relative;
 }
 
-.news-admin-header {
-    display: flex;
-    justify-content: space-between;
+.admin-form-group label {
     font-size: 11px;
-    color: var(--win-gray-dark);
-    border-bottom: 1px dashed var(--win-gray);
-    padding-bottom: 4px;
+    color: #000;
 }
 
-.news-admin-title {
-    font-weight: bold;
-    font-size: 14px;
-    margin: 4px 0;
+/* RIGHT: LOGS PANEL */
+.admin-logs-panel {
+    flex: 1;
+    padding: 12px;
+    border: 2px groove var(--win-white);
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
 }
 
-.news-admin-preview {
+.admin-logs-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 2px inset var(--win-white);
+    background: #fff;
+    padding: 2px;
+}
+
+/* LOG ITEM */
+.admin-log-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    border-bottom: 1px dotted #ccc;
     font-size: 12px;
-    color: #444;
+    cursor: default;
 }
 
-.news-has-image {
-    margin-right: 6px;
+.admin-log-item:hover {
+    background: var(--win-navy);
+    color: #fff;
 }
 
-.news-delete-btn {
-    align-self: flex-end;
-    margin-top: 8px;
+.admin-log-item:hover .log-date,
+.admin-log-item:hover .log-meta {
+    color: #fff;
+}
+
+.log-date {
+    font-size: 11px;
+    color: #666;
+    width: 70px;
+}
+
+.log-title {
+    flex: 1;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.log-meta {
+    font-size: 11px;
+    color: #666;
+}
+
+.log-thumb {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border: 1px solid #999;
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+    .admin-news-manager {
+        overflow-y: auto;
+        /* Allow main container scrolling */
+    }
+
+    .admin-content-split {
+        flex-direction: column;
+        overflow: visible;
+        /* Let content expand vertically */
+    }
+
+    .admin-editor-panel {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px groove var(--win-white);
+    }
+
+    .admin-logs-panel {
+        flex: none;
+        /* Don't try to fill, take natural height */
+        height: 400px;
+        /* Give it specific height or let it expand */
+        overflow-y: hidden;
+        /* Handle internal scroll */
+    }
+
+    .admin-logs-list {
+        height: 300px;
+        /* Fixed height for scrolling list on mobile */
+    }
 }
