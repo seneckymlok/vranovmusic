@@ -102,8 +102,13 @@
         bottom: var(--taskbar-height);
     }
 
+    /* Standardize "Safe Bottom Anchor" for ALL mobile/tablet widths */
     .wallpaper-logo {
-        top: 65%;
+        top: auto;
+        bottom: 12%;
+        /* Proportional bottom spacing */
+        left: 50%;
+        transform: translate(-50%, 0);
     }
 
     .desktop-icons {
@@ -114,11 +119,14 @@
         justify-items: center;
         gap: 12px;
         padding: 16px 8px;
-        max-height: calc(100vh - var(--taskbar-height) - 20px);
+        /* Ensure icons don't hit the logo */
+        max-height: 60vh;
+        overflow-y: auto;
     }
 
     .wallpaper-logo-image {
         width: 400px;
+        max-width: 80vw;
     }
 
     .wallpaper-tagline {
@@ -128,24 +136,37 @@
 }
 
 @media (max-width: 480px) {
+
+    /* Force 3 columns on small screens to save vertical space */
     .desktop-icons {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 12px 8px;
-        gap: 8px;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 4px;
+        padding: 12px 4px;
     }
 
+    /* Slightly smaller logo on small phones */
     .wallpaper-logo-image {
-        width: 300px;
+        width: 250px;
+    }
+
+    /* Move logo up slightly more on very small screens if needed, 
+       but percentage bottom usually handles it well. 
+       Let's stick to the inherited bottom: 12% or adjust if needed.
+    */
+    .wallpaper-logo {
+        bottom: 15%;
+        /* A bit higher on small screens */
     }
 }
 
-@media (max-width: 360px) {
+/* Extra small vertical screens correction */
+@media (max-height: 600px) and (max-width: 768px) {
     .desktop-icons {
-        grid-template-columns: repeat(2, 1fr);
+        max-height: 50vh;
     }
 
     .wallpaper-logo-image {
-        width: 240px;
+        width: 200px;
     }
 }
 
