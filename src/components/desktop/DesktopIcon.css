@@ -122,32 +122,23 @@
         font-size: 11px;
         max-width: 75px;
         color: var(--win-white);
-        /* Strong outline effect using multiple text-shadows */
-        text-shadow:
-            /* Black outline */
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px 1px 0 #000,
-            1px 1px 0 #000,
-            /* Additional softness */
-            0 0 3px rgba(0, 0, 0, 0.8),
-            0 0 6px rgba(0, 0, 0, 0.5);
-        /* Remove background from default label */
-        background: transparent !important;
+        /* Semi-transparent background for perfect readability without shadow artifacts */
+        background: rgba(0, 0, 0, 0.5) !important;
+        border-radius: 3px;
+        padding: 2px 4px;
+        text-shadow: none;
     }
 
-    /* Keep selection/hover BACKGROUND-FREE on mobile too */
+    /* Persist background on selection/active to ensure readability */
     .desktop-icon:hover .desktop-icon-label,
     .desktop-icon:focus .desktop-icon-label,
-    .desktop-icon.selected .desktop-icon-label {
-        background: transparent !important;
-        outline: 1px dotted var(--win-white);
-        /* Dotted outline like desktop */
-        text-shadow:
-            -1px -1px 0 #000,
-            1px -1px 0 #000,
-            -1px 1px 0 #000,
-            1px 1px 0 #000;
+    .desktop-icon.selected .desktop-icon-label,
+    .desktop-icon.mobile:active .desktop-icon-label {
+        background: rgba(0, 0, 0, 0.5) !important;
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        color: var(--win-white);
     }
 }
 
