@@ -93,16 +93,19 @@
     .desktop-icon.mobile {
         min-width: 80px;
         min-height: 90px;
+        -webkit-tap-highlight-color: transparent;
+        /* Prevent blue overlay on tap */
     }
 
     .desktop-icon.mobile:active {
-        background: rgba(0, 0, 128, 0.3);
+        background: transparent;
         border-radius: 4px;
+        opacity: 0.8;
+        /* Subtle feedback instead of color change */
     }
 
     .desktop-icon.mobile:active .desktop-icon-label {
-        background: var(--win-navy);
-        color: var(--win-white);
+        background: transparent;
     }
 
     .desktop-icon-image {
@@ -133,12 +136,18 @@
         background: transparent !important;
     }
 
-    /* Keep selection/hover background */
+    /* Keep selection/hover BACKGROUND-FREE on mobile too */
     .desktop-icon:hover .desktop-icon-label,
     .desktop-icon:focus .desktop-icon-label,
     .desktop-icon.selected .desktop-icon-label {
-        background: var(--win-navy) !important;
-        text-shadow: none;
+        background: transparent !important;
+        outline: 1px dotted var(--win-white);
+        /* Dotted outline like desktop */
+        text-shadow:
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
     }
 }
 
