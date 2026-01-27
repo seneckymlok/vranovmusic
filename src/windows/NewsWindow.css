@@ -1,0 +1,224 @@
+.news-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--win-gray-light);
+    color: var(--vm-black);
+}
+
+.news-header-bar {
+    background: var(--vm-purple);
+    color: var(--vm-green);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-pixel);
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    border-bottom: 2px solid var(--vm-black);
+}
+
+.news-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.news-loading,
+.news-empty {
+    text-align: center;
+    padding: var(--space-xl);
+    color: var(--win-gray-dark);
+}
+
+.news-card {
+    background: var(--win-white);
+    border: 2px solid var(--vm-black);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.news-card-header {
+    background: var(--win-navy);
+    color: var(--win-white);
+    padding: 4px 8px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-image-container {
+    position: relative;
+    border-bottom: 2px solid var(--vm-black);
+    background: var(--vm-black);
+}
+
+.news-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.scanline-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.1) 50%,
+            rgba(0, 0, 0, 0.1));
+    background-size: 100% 4px;
+    pointer-events: none;
+}
+
+.news-content {
+    padding: var(--space-md);
+}
+
+.news-title {
+    font-family: var(--font-system);
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: var(--space-sm);
+    text-transform: uppercase;
+    color: var(--vm-purple);
+}
+
+.news-body {
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.news-footer {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--win-gray);
+    border-top: 1px dashed var(--win-gray-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.news-like-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.news-share {
+    font-size: 10px;
+    color: var(--win-navy);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Comments Section */
+.news-comments-section {
+    padding: 0 var(--space-md) var(--space-md);
+}
+
+.comment-toggle-btn {
+    width: 100%;
+    margin-bottom: var(--space-sm);
+}
+
+.comments-container {
+    background: var(--win-gray-light);
+    border: 2px inset var(--win-white);
+    padding: var(--space-sm);
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.comment-item {
+    font-size: 12px;
+    border-bottom: 1px dotted var(--win-gray-dark);
+    padding-bottom: 4px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--win-gray-dark);
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: var(--vm-purple);
+}
+
+.comment-form {
+    display: flex;
+    gap: 4px;
+}
+
+.comment-input {
+    flex: 1;
+    padding: 4px;
+    font-family: var(--font-pixel);
+    border: 2px inset var(--win-white);
+}
+
+/* Identity Modal */
+.identity-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.identity-modal {
+    background: var(--win-gray);
+    width: 250px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.identity-header {
+    background: var(--win-navy);
+    color: white;
+    padding: 4px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.identity-form {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.identity-input {
+    width: 100%;
+    padding: 4px;
+}
+
+.btn-block {
+    width: 100%;
+}

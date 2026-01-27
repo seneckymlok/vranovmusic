@@ -1,0 +1,48 @@
+/* In AdminWindow.css usually, but we can append or make a new file if needed. 
+   Currently importing AdminWindow.css, so let's add these styles there. */
+
+.news-admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.news-admin-item {
+    background: var(--win-white);
+    border: 2px solid var(--win-gray-dark);
+    padding: var(--space-md);
+    color: var(--vm-black);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+}
+
+.news-admin-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--win-gray-dark);
+    border-bottom: 1px dashed var(--win-gray);
+    padding-bottom: 4px;
+}
+
+.news-admin-title {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.news-admin-preview {
+    font-size: 12px;
+    color: #444;
+}
+
+.news-has-image {
+    margin-right: 6px;
+}
+
+.news-delete-btn {
+    align-self: flex-end;
+    margin-top: 8px;
+}

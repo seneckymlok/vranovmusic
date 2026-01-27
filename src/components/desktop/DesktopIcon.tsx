@@ -37,6 +37,7 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
             className={`desktop-icon ${isSelected ? 'selected' : ''} ${isMobile ? 'mobile' : ''}`}
             onClick={handleClick}
             onDoubleClick={handleDoubleClick}
+            onMouseDown={(e) => e.preventDefault()}
             data-index={index}
         >
             <div className="desktop-icon-image">

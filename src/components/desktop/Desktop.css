@@ -8,6 +8,8 @@
     position: relative;
     overflow: hidden;
     padding-bottom: var(--taskbar-height);
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 /* ===== WALLPAPER - Split Black/White with Centered Logo ===== */

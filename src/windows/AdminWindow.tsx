@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useShows } from '../context/ShowsContext';
 import { ArchiveManager } from '../components/admin/ArchiveManager';
+import { NewsManager } from '../components/admin/NewsManager';
 import type { Show } from '../types';
 import './AdminWindow.css';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'vranov2026';
 
-type AdminTab = 'shows' | 'archive';
+type AdminTab = 'shows' | 'archive' | 'news';
 
 interface ShowFormData {
     date: string;
@@ -185,6 +186,12 @@ export const AdminWindow: React.FC = () => {
                         onClick={() => setActiveTab('archive')}
                     >
                         📁 ARCHIVE
+                    </button>
+                    <button
+                        className={`admin-tab ${activeTab === 'news' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('news')}
+                    >
+                        📡 NEWS
                     </button>
                 </div>
                 <div className="admin-header-actions">
@@ -394,8 +401,10 @@ export const AdminWindow: React.FC = () => {
                         )}
                     </div>
                 </>
-            ) : (
+            ) : activeTab === 'archive' ? (
                 <ArchiveManager />
+            ) : (
+                <NewsManager />
             )}
         </div>
     );

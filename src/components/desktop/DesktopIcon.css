@@ -13,7 +13,16 @@
     border: 1px solid transparent;
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.desktop-icon-label,
+.desktop-icon-emoji {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .desktop-icon:hover .desktop-icon-label {
@@ -27,8 +36,10 @@
 
 .desktop-icon:focus .desktop-icon-label,
 .desktop-icon.selected .desktop-icon-label {
-    background: var(--win-navy);
-    color: var(--win-white);
+    /* distinct outline instead of background change */
+    outline: 1px dotted var(--win-black);
+    background: transparent;
+    color: inherit;
 }
 
 .desktop-icon:focus .desktop-icon-image,
