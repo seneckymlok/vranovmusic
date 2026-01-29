@@ -16,6 +16,7 @@ interface GambleState {
 export const GambleWindow: React.FC = () => {
     const [reels, setReels] = useState<string[]>(['7️⃣', '7️⃣', '7️⃣']);
     const [isSpinning, setIsSpinning] = useState(false);
+    const [spinningReels, setSpinningReels] = useState<boolean[]>([false, false, false]);
     const [message, setMessage] = useState<string>('PRESS SPIN TO PLAY');
     const [spinsLeft, setSpinsLeft] = useState<number>(3); // Default display
     const [winType, setWinType] = useState<'none' | 'win' | 'lose'>('none');
@@ -108,6 +109,7 @@ export const GambleWindow: React.FC = () => {
         if (spinsLeft <= 0 || isSpinning) return;
 
         setIsSpinning(true);
+        setSpinningReels([true, true, true]);
         setMessage('SPINNING...');
         setWinType('none');
 
@@ -142,23 +144,44 @@ export const GambleWindow: React.FC = () => {
             } while (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]);
         }
 
-        // Animation sequence
-        const spinDuration = 2000; // 2 seconds
-        const intervalTime = 100;
-        let elapsed = 0;
+        // Animation sequence with sequential stopping
+        const startTime = Date.now();
+        const stopTimes = [1500, 2200, 3000]; // ms
+        const intervalTime = 80;
 
         const interval = setInterval(() => {
-            setReels([
-                SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-                SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)],
-                SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-            ]);
-            elapsed += intervalTime;
+            const elapsed = Date.now() - startTime;
 
-            if (elapsed >= spinDuration) {
+            // Check which reels should stop
+            const newSpinningReels = [
+                elapsed < stopTimes[0],
+                elapsed < stopTimes[1],
+                elapsed < stopTimes[2]
+            ];
+            setSpinningReels(newSpinningReels);
+
+            setReels(prevReels => {
+                const updatedReels = [...prevReels];
+
+                // For each reel
+                [0, 1, 2].forEach(i => {
+                    if (elapsed < stopTimes[i]) {
+                        // Still spinning: random symbol
+                        updatedReels[i] = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                    } else {
+                        // Stopped: Lock to final
+                        updatedReels[i] = finalReels[i];
+                    }
+                });
+
+                return updatedReels;
+            });
+
+            if (elapsed >= stopTimes[2] + 100) {
                 clearInterval(interval);
                 setIsSpinning(false);
-                setReels(finalReels);
+                setSpinningReels([false, false, false]);
+                setReels(finalReels); // Ensure final state is exact
 
                 if (isWin) {
                     setMessage(`WINNER! CODE: ${DISCOUNT_CODE}`);
@@ -189,9 +212,9 @@ export const GambleWindow: React.FC = () => {
                     <div className="slot-display">
                         <div className="payline" />
                         {reels.map((symbol, i) => (
-                            <div key={i} className={`slot-reel ${isSpinning ? 'spinning' : ''}`}>
+                            <div key={i} className={`slot-reel ${spinningReels[i] ? 'spinning' : ''}`}>
                                 <div className="reel-content">
-                                    {isSpinning ? SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)] : symbol}
+                                    {spinningReels[i] ? SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)] : symbol}
                                 </div>
                             </div>
                         ))}
