@@ -7,7 +7,7 @@ export const members: Member[] = [
         handle: '@44lex.exe',
         role: 'Spitter',
         category: 'spitters',
-        photo: '/members/44lex.PNG',
+        photo: '/members/44lex.webp',
         bio: '',
         links: {
             instagram: 'https://instagram.com/44lex.exe',
@@ -21,7 +21,7 @@ export const members: Member[] = [
         handle: '@sushiiislime',
         role: 'Spitter',
         category: 'spitters',
-        photo: '/members/susi.PNG',
+        photo: '/members/susi.webp',
         bio: '',
         links: {
             instagram: 'https://www.instagram.com/sushiiislime/',
@@ -35,7 +35,7 @@ export const members: Member[] = [
         handle: '@vranovcrevo',
         role: 'Spitter',
         category: 'spitters',
-        photo: '/members/pudge.JPG',
+        photo: '/members/pudge.webp',
         bio: '',
         links: {
             instagram: 'https://instagram.com/vranovcrevo',
@@ -49,7 +49,7 @@ export const members: Member[] = [
         handle: '@noeliiizi',
         role: 'Producer',
         category: 'producers',
-        photo: '/members/noel.JPG',
+        photo: '/members/noel.webp',
         bio: '',
         links: {
             instagram: 'https://instagram.com/noeliiizi',
