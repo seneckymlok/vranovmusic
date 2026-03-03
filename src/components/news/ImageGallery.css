@@ -1,0 +1,57 @@
+/* ========================================
+   IMAGE GALLERY - CLEAN NOSTALGIC
+   ======================================== */
+
+.image-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #000;
+    /* Dark background for photos */
+    border: 1px solid var(--win-gray-dark);
+    padding: 2px;
+}
+
+.gallery-main-view {
+    position: relative;
+    width: 100%;
+    /* Fixed height container to prevent layout jumping */
+    min-height: 200px;
+    max-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    overflow: hidden;
+}
+
+.gallery-image {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Controls Bar */
+.gallery-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--win-gray);
+    padding: 4px;
+    border-top: 1px solid var(--win-white);
+}
+
+.gallery-counter {
+    font-family: var(--font-system);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 8px;
+    background: var(--win-white);
+    border: 2px inset var(--win-white);
+}
+
+.gallery-btn {
+    min-width: 32px;
+}

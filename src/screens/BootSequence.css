@@ -1,0 +1,131 @@
+/* ========================================
+   Boot Sequence Styles
+   ======================================== */
+
+.boot-sequence {
+    position: fixed;
+    inset: 0;
+    background: var(--vm-black);
+    z-index: var(--z-boot);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boot-screen {
+    width: 100%;
+    max-width: 600px;
+    padding: var(--space-2xl);
+}
+
+/* ===== ASCII LOGO ===== */
+.boot-logo {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--vm-green);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    line-height: 1.2;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* ===== BOOT MESSAGES ===== */
+.boot-messages {
+    min-height: 200px;
+    margin-bottom: var(--space-xl);
+}
+
+.boot-line {
+    font-size: 14px;
+    color: var(--vm-green);
+    line-height: 1.5;
+    min-height: 21px;
+    /* Prevent layout shift for empty lines */
+}
+
+.boot-line .cursor {
+    color: var(--vm-green);
+    margin-left: 2px;
+}
+
+/* ===== PROGRESS BAR ===== */
+.boot-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.progress-track {
+    flex: 1;
+    height: 20px;
+    background: var(--vm-black);
+    border: 2px solid var(--vm-green);
+    padding: 2px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--vm-green);
+    transition: width 0.3s ease-out;
+}
+
+.progress-text {
+    min-width: 40px;
+    color: var(--vm-green);
+    font-size: 12px;
+}
+
+/* ===== SCREEN EFFECTS ===== */
+.boot-sequence::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+            transparent 0%,
+            rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+/* Subtle screen flicker */
+.boot-screen {
+    animation: screenFlicker 4s infinite;
+}
+
+@keyframes screenFlicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: 0.95;
+    }
+
+    94% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 0.97;
+    }
+
+    96% {
+        opacity: 1;
+    }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 480px) {
+    .boot-logo {
+        font-size: 7px;
+    }
+
+    .boot-line {
+        font-size: 12px;
+    }
+}

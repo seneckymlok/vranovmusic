@@ -1,0 +1,56 @@
+import React from 'react';
+import './StartMenu.css';
+
+interface StartMenuItem {
+    id: string;
+    label: string;
+    icon: string;
+    onClick: () => void;
+}
+
+interface StartMenuProps {
+    isOpen: boolean;
+    onClose: () => void;
+    items: StartMenuItem[];
+    isMobile?: boolean;
+}
+
+export const StartMenu: React.FC<StartMenuProps> = ({ isOpen, onClose, items, isMobile = false }) => {
+    if (!isOpen) return null;
+
+    return (
+        <>
+            {/* Backdrop to close menu */}
+            <div className="start-menu-backdrop" onClick={onClose} />
+
+            <div className={`start-menu ${isMobile ? 'mobile' : ''}`}>
+                {/* Side Banner */}
+                <div className="start-menu-banner" />
+
+                {/* Menu Items */}
+                <div className="start-menu-items">
+                    {/* Close button on mobile */}
+                    {isMobile && (
+                        <button className="start-menu-close" onClick={onClose}>
+                            <span>×</span>
+                        </button>
+                    )}
+
+                    {items.map(item => (
+                        <button
+                            key={item.id}
+                            className="start-menu-item"
+                            onClick={() => {
+                                item.onClick();
+                                onClose();
+                            }}
+                        >
+                            <span className="start-menu-item-icon">{item.icon}</span>
+                            <span className="start-menu-item-label">{item.label}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </>
+    );
+};

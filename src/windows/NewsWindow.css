@@ -1,0 +1,197 @@
+/* ========================================
+   NEWS WINDOW - CLEAN NOSTALGIC (WIN98)
+   ======================================== */
+
+.news-window {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--win-gray);
+    font-family: var(--font-system);
+}
+
+/* ===== HEADER ===== */
+.news-header-bar {
+    background: var(--win-white);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--win-gray-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: inset 1px 1px 0 #000;
+}
+
+.news-header-title {
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===== FEED CONTAINER ===== */
+.news-feed {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--win-gray-light);
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== NEWS POST (PAPER CARD) ===== */
+.news-card {
+    background: var(--win-white);
+    border: 1px solid var(--win-gray-dark);
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Post Header */
+.news-card-header {
+    background: linear-gradient(to right, var(--win-navy), #104a8e);
+    color: var(--win-white);
+    padding: 4px 8px;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+/* Image styling */
+.news-image-container {
+    border-bottom: 1px solid var(--win-gray);
+    background: #000;
+    display: flex;
+    justify-content: center;
+}
+
+.news-image {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Content Area */
+.news-content {
+    padding: 16px;
+}
+
+.news-title {
+    font-family: var(--font-system);
+    /* Standard font, readable */
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #000;
+    font-weight: bold;
+}
+
+.news-body {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+/* Footer / Actions */
+.news-footer {
+    padding: 8px 12px;
+    background: var(--win-gray-light);
+    border-top: 1px solid var(--win-gray);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.news-like-btn {
+    /* Standard btn-98 style already handles this, but adding specific margins if needed */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===== COMMENTS SECTION ===== */
+.news-comments-section {
+    padding: 0 12px 12px;
+    background: var(--win-gray-light);
+    border-top: 1px solid var(--win-white);
+}
+
+.comment-toggle-btn {
+    width: 100%;
+    margin-bottom: 8px;
+    text-align: left;
+    padding-left: 8px;
+}
+
+.comments-container {
+    background: var(--win-white);
+    border: 2px inset var(--win-white);
+    /* Sunken look */
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.comment-item {
+    padding-bottom: 6px;
+    border-bottom: 1px dotted var(--win-gray);
+    font-size: 12px;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-header {
+    font-size: 10px;
+    color: var(--win-gray-dark);
+    margin-bottom: 2px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: var(--win-navy);
+    margin-right: 6px;
+}
+
+.comment-body {
+    color: #000;
+    margin-left: 0;
+}
+
+/* Comment Input */
+.comment-form {
+    display: flex;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--win-gray-light);
+}
+
+.comment-input {
+    flex: 1;
+    font-size: 13px;
+    padding: 4px;
+}
+
+/* Loading/Empty States */
+.news-loading,
+.news-empty {
+    text-align: center;
+    color: var(--win-gray-dark);
+    padding: 20px;
+    font-style: italic;
+}

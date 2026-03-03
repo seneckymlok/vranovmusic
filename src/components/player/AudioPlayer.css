@@ -1,0 +1,300 @@
+/* ========================================
+   AUDIO PLAYER - Windows 98 / Y2K Style
+   Matches the Vranov Music OS design system
+   ======================================== */
+
+.audio-player {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--win-gray);
+    padding: 8px;
+    gap: 8px;
+}
+
+/* ========================================
+   LCD DISPLAY PANEL
+   ======================================== */
+
+.player-lcd {
+    background: #001a00;
+    box-shadow: var(--win-border-sunken);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 100px;
+}
+
+.lcd-visualizer {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3px;
+    height: 32px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.viz-bar {
+    width: 8px;
+    height: 4px;
+    background: var(--vm-green);
+    border-radius: 1px;
+    box-shadow: 0 0 4px var(--vm-green);
+}
+
+.viz-bar.playing {
+    animation: visualize 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes visualize {
+    0% {
+        height: 4px;
+        opacity: 0.4;
+    }
+
+    50% {
+        height: 20px;
+        opacity: 0.8;
+    }
+
+    100% {
+        height: 32px;
+        opacity: 1;
+    }
+}
+
+.lcd-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.lcd-track {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lcd-artist {
+    color: var(--vm-green-dim);
+    font-family: var(--font-pixel);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lcd-title {
+    color: var(--vm-green);
+    font-family: var(--font-pixel);
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 8px var(--vm-green);
+    letter-spacing: 2px;
+}
+
+.lcd-time {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--vm-green);
+    text-shadow: 0 0 6px var(--vm-green);
+}
+
+.time-separator {
+    opacity: 0.5;
+    margin: 0 2px;
+}
+
+.lcd-status {
+    font-family: var(--font-pixel);
+    font-size: 11px;
+    color: var(--vm-green-dim);
+    letter-spacing: 2px;
+    text-align: center;
+    padding-top: 4px;
+    border-top: 1px solid rgba(0, 255, 0, 0.2);
+}
+
+/* ========================================
+   SEEK BAR
+   ======================================== */
+
+.player-seek {
+    padding: 4px 0;
+}
+
+.seek-track {
+    position: relative;
+    height: 16px;
+    background: var(--vm-black);
+    box-shadow: var(--win-border-sunken);
+}
+
+.seek-fill {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    background: linear-gradient(180deg, var(--vm-green), var(--vm-green-dim));
+    pointer-events: none;
+    box-shadow: 0 0 4px var(--vm-green);
+}
+
+.seek-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ========================================
+   TRANSPORT CONTROLS
+   ======================================== */
+
+.player-transport {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    background: var(--win-gray);
+    box-shadow: var(--win-border-sunken);
+}
+
+.transport-btn {
+    width: 40px;
+    height: 32px;
+    min-width: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.play-btn {
+    width: 50px;
+    min-width: 50px;
+}
+
+.play-btn.active {
+    background: var(--vm-green);
+}
+
+.volume-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.volume-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.volume-track {
+    position: relative;
+    width: 80px;
+    height: 12px;
+    background: var(--vm-black);
+    box-shadow: var(--win-border-sunken);
+}
+
+.volume-fill {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    background: var(--vm-green-dim);
+    pointer-events: none;
+}
+
+.volume-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.player-footer {
+    margin-top: auto;
+    padding: 8px;
+    background: var(--vm-purple-dark);
+    box-shadow: var(--win-border-sunken);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+}
+
+.footer-label {
+    font-size: 10px;
+    color: var(--win-gray-dark);
+    letter-spacing: 2px;
+}
+
+.footer-track {
+    font-size: 12px;
+    color: var(--vm-gold);
+    letter-spacing: 1px;
+}
+
+/* ========================================
+   MOBILE RESPONSIVENESS
+   ======================================== */
+
+@media (max-width: 480px) {
+    .audio-player {
+        padding: 6px;
+        gap: 6px;
+    }
+
+    .player-lcd {
+        padding: 8px;
+        min-height: 80px;
+    }
+
+    .lcd-visualizer {
+        height: 24px;
+    }
+
+    .viz-bar {
+        width: 6px;
+    }
+
+    .lcd-title {
+        font-size: 14px;
+    }
+
+    .transport-btn {
+        width: 36px;
+        height: 28px;
+    }
+
+    .play-btn {
+        width: 44px;
+    }
+
+    .volume-track {
+        width: 60px;
+    }
+}

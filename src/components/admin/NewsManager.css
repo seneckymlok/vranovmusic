@@ -1,0 +1,183 @@
+/* ========================================
+   ADMIN NEWS MANAGER - STANDARD WIN98
+   ======================================== */
+
+.admin-news-manager {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--win-gray);
+    font-family: var(--font-system);
+    padding: 8px;
+    gap: 8px;
+}
+
+/* ===== DASHBOARD STATS ===== */
+.admin-stats-bar {
+    display: flex;
+    gap: 12px;
+    padding: 8px;
+    background: var(--win-gray-light);
+    border: 2px groove var(--win-white);
+    margin-bottom: 4px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+}
+
+.stat-label {
+    color: var(--win-gray-dark);
+}
+
+.stat-value {
+    font-weight: bold;
+    color: #000;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.admin-content-split {
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    overflow: hidden;
+}
+
+/* LEFT: EDITOR PANEL */
+.admin-editor-panel {
+    width: 350px;
+    background: var(--win-gray);
+    border: 2px groove var(--win-white);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.admin-panel-title {
+    font-size: 12px;
+    background: var(--win-navy);
+    color: #fff;
+    padding: 2px 4px;
+    margin: 0 0 8px 0;
+    font-weight: bold;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-form-group label {
+    font-size: 11px;
+    color: #000;
+}
+
+/* RIGHT: LOGS PANEL */
+.admin-logs-panel {
+    flex: 1;
+    padding: 12px;
+    border: 2px groove var(--win-white);
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.admin-logs-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 2px inset var(--win-white);
+    background: #fff;
+    padding: 2px;
+}
+
+/* LOG ITEM */
+.admin-log-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    border-bottom: 1px dotted #ccc;
+    font-size: 12px;
+    cursor: default;
+}
+
+.admin-log-item:hover {
+    background: var(--win-navy);
+    color: #fff;
+}
+
+.admin-log-item:hover .log-date,
+.admin-log-item:hover .log-meta {
+    color: #fff;
+}
+
+.log-date {
+    font-size: 11px;
+    color: #666;
+    width: 70px;
+}
+
+.log-title {
+    flex: 1;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.log-meta {
+    font-size: 11px;
+    color: #666;
+}
+
+.log-thumb {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    border: 1px solid #999;
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 768px) {
+    .admin-news-manager {
+        overflow-y: auto;
+        /* Allow main container scrolling */
+    }
+
+    .admin-content-split {
+        flex-direction: column;
+        overflow: visible;
+        /* Let content expand vertically */
+    }
+
+    .admin-editor-panel {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px groove var(--win-white);
+    }
+
+    .admin-logs-panel {
+        flex: none;
+        /* Don't try to fill, take natural height */
+        height: 400px;
+        /* Give it specific height or let it expand */
+        overflow-y: hidden;
+        /* Handle internal scroll */
+    }
+
+    .admin-logs-list {
+        height: 300px;
+        /* Fixed height for scrolling list on mobile */
+    }
+}
