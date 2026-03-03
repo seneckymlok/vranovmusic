@@ -59,7 +59,7 @@ export const members: Member[] = [
         id: 'sniiisen',
         name: 'SNÍSEN',
         handle: '@sniiisen',
-        role: 'Producer',
+        role: 'DJ / Producer',
         category: 'producers',
         bio: '',
         links: {

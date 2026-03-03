@@ -241,6 +241,7 @@
     /* Center the last item if it's alone in its row */
     .member-card:last-child:nth-child(odd) {
         grid-column: 1 / -1;
+        width: 100%;
         max-width: 50%;
         justify-self: center;
     }
