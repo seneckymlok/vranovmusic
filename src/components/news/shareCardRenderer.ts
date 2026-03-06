@@ -214,7 +214,7 @@ export class ShareCardRenderer {
         const imgW = W - pad * 2;
         const imgH = Math.round(H * 0.38);
         const imgX = pad;
-        const imgY = Math.round(H * 0.065);
+        const imgY = Math.round(H * 0.13);
 
         if (postImage) {
             // Shadow
@@ -306,7 +306,7 @@ export class ShareCardRenderer {
         const imgW = W - pad * 2;
         const imgH = Math.round(H * 0.38);
         const imgX = pad;
-        const imgY = Math.round(H * 0.06);
+        const imgY = Math.round(H * 0.13);
 
         if (postImage) {
             // Shadow
@@ -420,7 +420,7 @@ export class ShareCardRenderer {
         const imgW = W - pad * 2;
         const imgH = Math.round(H * 0.36);
         const imgX = pad;
-        const imgY = Math.round(H * 0.065);
+        const imgY = Math.round(H * 0.13);
 
         if (postImage) {
             const glowLayers = [
@@ -526,14 +526,14 @@ export class ShareCardRenderer {
         const urlSize = Math.round(40 * s);
         const taglineSize = Math.max(14, Math.round(18 * s));
         const brandSize = Math.round(44 * s);
-        const logoH = Math.round(140 * s);
+        const logoH = Math.round(120 * s);
 
-        const urlY = H - Math.round(60 * s);
-        const taglineY = urlY - Math.round(52 * s);
-        const brandY = taglineY - Math.round(52 * s);
-        const logoBottomY = brandY - Math.round(25 * s);
+        const urlY = H - Math.round(48 * s);
+        const taglineY = urlY - Math.round(44 * s);
+        const brandY = taglineY - Math.round(44 * s);
+        const logoBottomY = brandY - Math.round(18 * s);
         const logoTopY = logoBottomY - logoH;
-        const sepY = logoTopY - Math.round(35 * s);
+        const sepY = logoTopY - Math.round(24 * s);
 
         // Separator
         ctx.save();
