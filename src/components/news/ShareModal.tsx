@@ -9,9 +9,9 @@ interface ShareModalProps {
 }
 
 const TEMPLATES: { id: TemplateType; label: string; icon: string }[] = [
-    { id: 'midnight', label: 'MIDNIGHT', icon: '🌙' },
+    { id: 'win98', label: 'WIN98', icon: '🖥️' },
     { id: 'split', label: 'SPLIT', icon: '◐' },
-    { id: 'neon', label: 'NEON', icon: '⚡' },
+    { id: 'midnight', label: 'MIDNIGHT', icon: '🌙' },
 ];
 
 const FORMATS: { id: FormatType; label: string; ratio: string }[] = [
@@ -20,7 +20,7 @@ const FORMATS: { id: FormatType; label: string; ratio: string }[] = [
 ];
 
 export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
-    const [template, setTemplate] = useState<TemplateType>('midnight');
+    const [template, setTemplate] = useState<TemplateType>('win98');
     const [format, setFormat] = useState<FormatType>('story');
     const [isRendering, setIsRendering] = useState(true);
     const [isExporting, setIsExporting] = useState(false);
