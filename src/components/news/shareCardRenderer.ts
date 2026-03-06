@@ -304,7 +304,7 @@ export class ShareCardRenderer {
         const imgPad = Math.round(24 * s);
         const imgX = ciX + imgPad;
         const imgW = ciW - imgPad * 2;
-        const imgH = Math.round(ciH * 0.42);
+        const imgH = imgW; // Square image
         const imgY = ciY + imgPad;
 
         if (postImage) {
@@ -339,18 +339,30 @@ export class ShareCardRenderer {
         ctx.font = `${dateSize}px "Segoe UI", monospace`;
         ctx.fillText(formatDate(post.created_at), ciX + ciW / 2, dateY);
 
-        // ── Branding (flows down from date, NOT anchored to bottom) ──
+        // ── Branding (vertically centered in remaining space) ──
         const bUrlSize = Math.round(36 * s);
         const bTagSize = Math.max(13, Math.round(16 * s));
         const bNameSize = Math.round(40 * s);
         const bLogoH = Math.round(110 * s);
 
+        // Calculate total branding block height
+        const sepGap = Math.round(20 * s);
+        const logoGap = Math.round(14 * s);
+        const nameGap = Math.round(8 * s);
+        const tagGap = Math.round(14 * s);
+        const brandBlockH = sepGap + bLogoH + logoGap + bNameSize + nameGap + bTagSize + tagGap + bUrlSize;
+
+        // Center in remaining space
         const dateBottom = dateY + dateSize;
-        const bSepY = dateBottom + Math.round(40 * s);
-        const bLogoTop = bSepY + Math.round(20 * s);
-        const bNameY = bLogoTop + bLogoH + Math.round(14 * s);
-        const bTagY = bNameY + bNameSize + Math.round(8 * s);
-        const bUrlY = bTagY + bTagSize + Math.round(14 * s);
+        const contentBottom = ciY + ciH;
+        const remainingSpace = contentBottom - dateBottom;
+        const brandStartY = dateBottom + (remainingSpace - brandBlockH) / 2;
+
+        const bSepY = brandStartY;
+        const bLogoTop = bSepY + sepGap;
+        const bNameY = bLogoTop + bLogoH + logoGap;
+        const bTagY = bNameY + bNameSize + nameGap;
+        const bUrlY = bTagY + bTagSize + tagGap;
 
         // Separator
         ctx.save();
