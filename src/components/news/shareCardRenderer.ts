@@ -323,7 +323,7 @@ export class ShareCardRenderer {
             : ciY + Math.round(ciH * 0.08);
 
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = `bold ${titleSize}px "Segoe UI", "MS Sans Serif", sans-serif`;
+        ctx.font = `bold ${titleSize}px "VT323", monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
