@@ -257,35 +257,127 @@
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
     .share-overlay {
-        padding: 8px;
-        align-items: flex-start;
-        padding-top: 30px;
+        padding: 0;
+        align-items: flex-end;
     }
 
     .share-modal {
         max-width: 100%;
-        max-height: calc(100vh - 70px);
+        width: 100%;
+        max-height: calc(100vh - var(--taskbar-height));
+        border-radius: 12px 12px 0 0;
+        overflow-y: auto;
+    }
+
+    .share-titlebar {
+        height: 40px;
+        padding: 4px 10px;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .share-titlebar-text {
+        font-size: 13px;
+    }
+
+    .share-titlebar-close {
+        width: 32px;
+        height: 28px;
+        font-size: 18px;
+        border-radius: 4px;
+    }
+
+    .share-preview {
+        margin: 6px;
     }
 
     .share-preview.story {
-        max-height: 42vh;
+        max-height: 36vh;
     }
 
     .share-preview.post {
-        max-height: 38vh;
+        max-height: 32vh;
+    }
+
+    .share-controls {
+        padding: 4px 8px 2px;
+        gap: 6px;
+    }
+
+    .share-ctrl-row {
+        gap: 2px;
+    }
+
+    .share-ctrl-label {
+        font-size: 10px;
+    }
+
+    .share-template-bar {
+        gap: 3px;
     }
 
     .share-tpl-btn {
-        min-height: 44px !important;
-        padding: 6px 4px !important;
+        min-height: 40px !important;
+        padding: 4px 2px !important;
+        flex-direction: row;
+        gap: 4px;
+    }
+
+    .share-tpl-icon {
+        font-size: 14px;
+    }
+
+    .share-tpl-label {
+        font-size: 10px;
+    }
+
+    .share-format-bar {
+        gap: 3px;
     }
 
     .share-fmt-btn {
-        min-height: 44px !important;
+        min-height: 38px !important;
+        padding: 4px 6px !important;
+        font-size: 12px !important;
+    }
+
+    .share-actions {
+        padding: 4px 8px 10px;
+        gap: 6px;
     }
 
     .share-btn-download,
     .share-btn-share {
         min-height: 44px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 400px) {
+    .share-preview.story {
+        max-height: 32vh;
+    }
+
+    .share-preview.post {
+        max-height: 28vh;
+    }
+}
+
+/* Short screens (landscape or small viewports) */
+@media (max-height: 700px) {
+    .share-preview.story {
+        max-height: 28vh;
+    }
+
+    .share-preview.post {
+        max-height: 26vh;
+    }
+
+    .share-tpl-btn {
+        min-height: 36px !important;
+    }
+
+    .share-fmt-btn {
+        min-height: 34px !important;
     }
 }
