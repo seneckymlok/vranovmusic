@@ -345,21 +345,22 @@ export class ShareCardRenderer {
         const bNameSize = Math.round(40 * s);
         const bLogoH = Math.round(110 * s);
 
-        // Calculate total branding block height
-        const sepGap = Math.round(20 * s);
+        // Calculate total branding block height (below separator)
         const logoGap = Math.round(14 * s);
         const nameGap = Math.round(8 * s);
         const tagGap = Math.round(14 * s);
-        const brandBlockH = sepGap + bLogoH + logoGap + bNameSize + nameGap + bTagSize + tagGap + bUrlSize;
+        const brandContentH = bLogoH + logoGap + bNameSize + nameGap + bTagSize + tagGap + bUrlSize;
 
-        // Center in remaining space
+        // Separator sits right below the date
         const dateBottom = dateY + dateSize;
-        const contentBottom = ciY + ciH;
-        const remainingSpace = contentBottom - dateBottom;
-        const brandStartY = dateBottom + (remainingSpace - brandBlockH) / 2;
+        const bSepY = dateBottom + Math.round(30 * s);
 
-        const bSepY = brandStartY;
-        const bLogoTop = bSepY + sepGap;
+        // Center the logo+text block in remaining space below separator
+        const contentBottom = ciY + ciH;
+        const spaceBelow = contentBottom - bSepY - Math.round(16 * s);
+        const brandOffsetY = bSepY + Math.round(16 * s) + (spaceBelow - brandContentH) / 2;
+
+        const bLogoTop = brandOffsetY;
         const bNameY = bLogoTop + bLogoH + logoGap;
         const bTagY = bNameY + bNameSize + nameGap;
         const bUrlY = bTagY + bTagSize + tagGap;
