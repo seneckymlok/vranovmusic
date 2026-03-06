@@ -61,9 +61,12 @@ export const members: Member[] = [
         handle: '@sniiisen',
         role: 'DJ / Producer',
         category: 'producers',
+        photo: '/members/snisen.webp',
         bio: '',
         links: {
             instagram: 'https://www.instagram.com/sniiisen/',
+            spotify: 'https://open.spotify.com/artist/29vZRPmD1hCRCAf36TgNwU?si=xfW3bvkATbGcnJ-xeVVfZA',
+            appleMusic: 'https://music.apple.com/us/artist/sn%C3%ADsen/1793566810',
         },
     },
 ];
