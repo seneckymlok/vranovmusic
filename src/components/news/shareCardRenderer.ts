@@ -304,7 +304,7 @@ export class ShareCardRenderer {
         const imgPad = Math.round(24 * s);
         const imgX = ciX + imgPad;
         const imgW = ciW - imgPad * 2;
-        const imgH = Math.round(ciH * 0.37);
+        const imgH = Math.round(ciH * 0.42);
         const imgY = ciY + imgPad;
 
         if (postImage) {
@@ -339,18 +339,18 @@ export class ShareCardRenderer {
         ctx.font = `${dateSize}px "Segoe UI", monospace`;
         ctx.fillText(formatDate(post.created_at), ciX + ciW / 2, dateY);
 
-        // ── Branding (inside content) ──
+        // ── Branding (flows down from date, NOT anchored to bottom) ──
         const bUrlSize = Math.round(36 * s);
         const bTagSize = Math.max(13, Math.round(16 * s));
         const bNameSize = Math.round(40 * s);
         const bLogoH = Math.round(110 * s);
 
-        const bUrlY = ciY + ciH - Math.round(22 * s) - bUrlSize;
-        const bTagY = bUrlY - Math.round(38 * s);
-        const bNameY = bTagY - Math.round(40 * s);
-        const bLogoBottom = bNameY - Math.round(14 * s);
-        const bLogoTop = bLogoBottom - bLogoH;
-        const bSepY = bLogoTop - Math.round(16 * s);
+        const dateBottom = dateY + dateSize;
+        const bSepY = dateBottom + Math.round(40 * s);
+        const bLogoTop = bSepY + Math.round(20 * s);
+        const bNameY = bLogoTop + bLogoH + Math.round(14 * s);
+        const bTagY = bNameY + bNameSize + Math.round(8 * s);
+        const bUrlY = bTagY + bTagSize + Math.round(14 * s);
 
         // Separator
         ctx.save();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ShareCardRenderer, type TemplateType, type FormatType } from './shareCardRenderer';
+import { ShareCardRenderer } from './shareCardRenderer';
 import type { NewsPost } from '../../lib/supabase';
 import './ShareModal.css';
 
@@ -8,27 +8,14 @@ interface ShareModalProps {
     onClose: () => void;
 }
 
-const TEMPLATES: { id: TemplateType; label: string; icon: string }[] = [
-    { id: 'win98', label: 'WIN98', icon: '🖥️' },
-    { id: 'split', label: 'SPLIT', icon: '◐' },
-    { id: 'midnight', label: 'MIDNIGHT', icon: '🌙' },
-];
-
-const FORMATS: { id: FormatType; label: string; ratio: string }[] = [
-    { id: 'story', label: 'STORY', ratio: '9:16' },
-    { id: 'post', label: 'POST', ratio: '4:5' },
-];
-
 export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
-    const [template, setTemplate] = useState<TemplateType>('win98');
-    const [format, setFormat] = useState<FormatType>('story');
     const [isRendering, setIsRendering] = useState(true);
     const [isExporting, setIsExporting] = useState(false);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const rendererRef = useRef<ShareCardRenderer | null>(null);
 
-    // ── Render preview whenever template / format changes ──
+    // ── Render preview ──
     const renderPreview = useCallback(async () => {
         if (!canvasRef.current) return;
         setIsRendering(true);
@@ -38,13 +25,13 @@ export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
         }
 
         try {
-            await rendererRef.current.render(post, template, format);
+            await rendererRef.current.render(post, 'win98', 'story');
         } catch (err) {
             console.error('Share card render error:', err);
         }
 
         setIsRendering(false);
-    }, [post, template, format]);
+    }, [post]);
 
     useEffect(() => { renderPreview(); }, [renderPreview]);
 
@@ -93,11 +80,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
                     files: [file],
                 });
             } else {
-                // Fallback to download
                 await handleDownload();
             }
         } catch (err) {
-            // User cancelled share dialog — not an error
             if ((err as Error).name !== 'AbortError') {
                 console.error('Share error:', err);
                 await handleDownload();
@@ -125,7 +110,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
                 </div>
 
                 {/* ── Preview ── */}
-                <div className={`share-preview ${format}`}>
+                <div className="share-preview story">
                     {isRendering && (
                         <div className="share-preview-spinner">
                             <span className="animate-blink">RENDERING…</span>
@@ -136,42 +121,6 @@ export const ShareModal: React.FC<ShareModalProps> = ({ post, onClose }) => {
                         className="share-canvas"
                         style={{ opacity: isRendering ? 0.3 : 1 }}
                     />
-                </div>
-
-                {/* ── Controls ── */}
-                <div className="share-controls">
-                    {/* Template selector */}
-                    <div className="share-ctrl-row">
-                        <span className="share-ctrl-label">TEMPLATE</span>
-                        <div className="share-template-bar">
-                            {TEMPLATES.map((t) => (
-                                <button
-                                    key={t.id}
-                                    className={`btn-98 share-tpl-btn ${template === t.id ? 'active' : ''}`}
-                                    onClick={() => setTemplate(t.id)}
-                                >
-                                    <span className="share-tpl-icon">{t.icon}</span>
-                                    <span className="share-tpl-label">{t.label}</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Format toggle */}
-                    <div className="share-ctrl-row">
-                        <span className="share-ctrl-label">FORMAT</span>
-                        <div className="share-format-bar">
-                            {FORMATS.map((f) => (
-                                <button
-                                    key={f.id}
-                                    className={`btn-98 share-fmt-btn ${format === f.id ? 'active' : ''}`}
-                                    onClick={() => setFormat(f.id)}
-                                >
-                                    {f.label} <span className="share-fmt-ratio">({f.ratio})</span>
-                                </button>
-                            ))}
-                        </div>
-                    </div>
                 </div>
 
                 {/* ── Action buttons ── */}

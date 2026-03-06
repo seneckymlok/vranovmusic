@@ -109,19 +109,8 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-}
-
-.share-preview.story {
-    /* Limit height, let aspect ratio determine width; canvas fills via CSS */
-    max-height: 52vh;
+    max-height: 72vh;
     aspect-ratio: 9 / 16;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.share-preview.post {
-    max-height: 48vh;
-    aspect-ratio: 4 / 5;
     margin-left: auto;
     margin-right: auto;
 }
@@ -145,88 +134,6 @@
     font-family: var(--font-pixel);
     font-size: 16px;
     letter-spacing: 2px;
-}
-
-/* ── Controls ── */
-.share-controls {
-    padding: 6px 10px 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.share-ctrl-row {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.share-ctrl-label {
-    font-family: var(--font-system);
-    font-size: 11px;
-    font-weight: bold;
-    color: var(--vm-black);
-    letter-spacing: 0.5px;
-}
-
-/* Template buttons */
-.share-template-bar {
-    display: flex;
-    gap: 4px;
-}
-
-.share-tpl-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    padding: 5px 4px !important;
-    min-width: 0 !important;
-    font-size: 10px !important;
-    transition: background 0.1s;
-}
-
-.share-tpl-btn.active {
-    box-shadow: var(--win-border-sunken);
-    background: var(--win-white);
-}
-
-.share-tpl-icon {
-    font-size: 16px;
-    line-height: 1;
-}
-
-.share-tpl-label {
-    font-family: var(--font-system);
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-/* Format buttons */
-.share-format-bar {
-    display: flex;
-    gap: 4px;
-}
-
-.share-fmt-btn {
-    flex: 1;
-    min-width: 0 !important;
-    padding: 4px 6px !important;
-    font-size: 11px !important;
-    text-align: center;
-    transition: background 0.1s;
-}
-
-.share-fmt-btn.active {
-    box-shadow: var(--win-border-sunken);
-    background: var(--win-white);
-}
-
-.share-fmt-ratio {
-    color: var(--win-gray-dark);
-    font-size: 10px;
 }
 
 /* ── Action buttons ── */
@@ -254,7 +161,7 @@
     font-size: 12px !important;
 }
 
-/* ── Mobile responsive ── */
+/* ── Mobile ── */
 @media (max-width: 768px) {
     .share-overlay {
         padding: 0;
@@ -266,7 +173,6 @@
         width: 100%;
         max-height: calc(100vh - var(--taskbar-height));
         border-radius: 12px 12px 0 0;
-        overflow-y: auto;
     }
 
     .share-titlebar {
@@ -288,61 +194,11 @@
 
     .share-preview {
         margin: 6px;
-    }
-
-    .share-preview.story {
-        max-height: 36vh;
-    }
-
-    .share-preview.post {
-        max-height: 32vh;
-    }
-
-    .share-controls {
-        padding: 4px 8px 2px;
-        gap: 6px;
-    }
-
-    .share-ctrl-row {
-        gap: 2px;
-    }
-
-    .share-ctrl-label {
-        font-size: 10px;
-    }
-
-    .share-template-bar {
-        gap: 3px;
-    }
-
-    .share-tpl-btn {
-        min-height: 40px !important;
-        padding: 4px 2px !important;
-        flex-direction: row;
-        gap: 4px;
-    }
-
-    .share-tpl-icon {
-        font-size: 14px;
-    }
-
-    .share-tpl-label {
-        font-size: 10px;
-    }
-
-    .share-format-bar {
-        gap: 3px;
-    }
-
-    .share-fmt-btn {
-        min-height: 38px !important;
-        padding: 4px 6px !important;
-        font-size: 12px !important;
+        max-height: 68vh;
     }
 
     .share-actions {
         padding: 4px 8px 10px;
-        gap: 6px;
     }
 
     .share-btn-download,
@@ -354,30 +210,7 @@
 
 /* Extra small phones */
 @media (max-width: 400px) {
-    .share-preview.story {
-        max-height: 32vh;
-    }
-
-    .share-preview.post {
-        max-height: 28vh;
-    }
-}
-
-/* Short screens (landscape or small viewports) */
-@media (max-height: 700px) {
-    .share-preview.story {
-        max-height: 28vh;
-    }
-
-    .share-preview.post {
-        max-height: 26vh;
-    }
-
-    .share-tpl-btn {
-        min-height: 36px !important;
-    }
-
-    .share-fmt-btn {
-        min-height: 34px !important;
+    .share-preview {
+        max-height: 62vh;
     }
 }
