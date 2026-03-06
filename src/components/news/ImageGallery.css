@@ -50,6 +50,7 @@
     padding: 2px 8px;
     background: var(--win-white);
     border: 2px inset var(--win-white);
+    color: #000;
 }
 
 .gallery-btn {

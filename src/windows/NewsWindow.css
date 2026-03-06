@@ -108,11 +108,15 @@
     justify-content: space-between;
 }
 
-.news-like-btn {
-    /* Standard btn-98 style already handles this, but adding specific margins if needed */
+.news-like-btn,
+.news-share-btn {
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+.news-share-btn {
+    font-size: 11px;
 }
 
 /* ===== COMMENTS SECTION ===== */

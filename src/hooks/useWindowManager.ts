@@ -39,28 +39,42 @@ const useIsMobile = () => {
 
 // Get responsive window size based on screen
 const getResponsiveSize = (defaultSize: { width: number; height: number }, isMobile: boolean) => {
-    if (!isMobile) return defaultSize;
-
     const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 375;
     const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 667;
 
+    if (isMobile) {
+        return {
+            width: Math.min(defaultSize.width, viewportWidth - 16), // 8px margin on each side
+            height: Math.min(defaultSize.height, viewportHeight - 80), // Account for taskbar + some padding
+        };
+    }
+
+    // Desktop: clamp to viewport so windows never open larger than the screen
+    const taskbarHeight = 40; // matches --taskbar-height default
     return {
-        width: Math.min(defaultSize.width, viewportWidth - 16), // 8px margin on each side
-        height: Math.min(defaultSize.height, viewportHeight - 80), // Account for taskbar + some padding
+        width: Math.min(defaultSize.width, viewportWidth - 40), // 20px margin on each side
+        height: Math.min(defaultSize.height, viewportHeight - taskbarHeight - 60), // account for taskbar + position offset
     };
 };
 
 // Get responsive position
 const getResponsivePosition = (index: number, size: { width: number; height: number }, isMobile: boolean) => {
+    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 375;
+    const viewportHeight = typeof window !== 'undefined' ? window.innerHeight : 667;
+
     if (!isMobile) {
-        return {
-            x: 80 + (index % 3) * 50,
-            y: 60 + Math.floor(index / 3) * 40,
-        };
+        const taskbarHeight = 40;
+        let x = 80 + (index % 3) * 50;
+        let y = 60 + Math.floor(index / 3) * 40;
+
+        // Clamp so window stays fully on-screen
+        x = Math.min(x, Math.max(0, viewportWidth - size.width - 10));
+        y = Math.min(y, Math.max(0, viewportHeight - taskbarHeight - size.height - 10));
+
+        return { x, y };
     }
 
     // Center windows on mobile, slightly staggered
-    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 375;
     return {
         x: Math.max(8, (viewportWidth - size.width) / 2),
         y: 20 + (index % 2) * 20, // Slight stagger

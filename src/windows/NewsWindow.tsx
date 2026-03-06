@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { fetchNewsPosts, likeNewsPost, type NewsPost } from '../lib/supabase';
 import { CommentsSection } from '../components/news/CommentsSection';
 import { ImageGallery } from '../components/news/ImageGallery';
+import { ShareModal } from '../components/news/ShareModal';
 import './NewsWindow.css';
 
 export const NewsWindow: React.FC = () => {
     const [posts, setPosts] = useState<NewsPost[]>([]);
     const [loading, setLoading] = useState(true);
+    const [sharingPost, setSharingPost] = useState<NewsPost | null>(null);
 
     const loadPosts = async () => {
         setLoading(true);
@@ -74,6 +76,12 @@ export const NewsWindow: React.FC = () => {
                                 >
                                     ❤️ {post.likes}
                                 </button>
+                                <button
+                                    className="btn-98 news-share-btn"
+                                    onClick={() => setSharingPost(post)}
+                                >
+                                    📤 SHARE
+                                </button>
                             </div>
 
                             <CommentsSection postId={post.id} />
@@ -81,6 +89,14 @@ export const NewsWindow: React.FC = () => {
                     ))
                 )}
             </div>
+
+            {/* Share Modal */}
+            {sharingPost && (
+                <ShareModal
+                    post={sharingPost}
+                    onClose={() => setSharingPost(null)}
+                />
+            )}
         </div>
     );
 };
