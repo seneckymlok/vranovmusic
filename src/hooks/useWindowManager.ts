@@ -10,7 +10,7 @@ interface WindowConfig {
 
 const INITIAL_WINDOWS: WindowConfig[] = [
     { id: 'about', title: 'VM.exe', icon: '💿', defaultSize: { width: 500, height: 400 } },
-    { id: 'members', title: 'MEMBERS.exe', icon: '👥', defaultSize: { width: 600, height: 500 } },
+    { id: 'members', title: 'MEMBERS.exe', icon: '👥', defaultSize: { width: 750, height: 500 } },
     { id: 'shows', title: 'SHOWS.exe', icon: '🎤', defaultSize: { width: 550, height: 450 } },
     { id: 'archive', title: 'ARCHIVE.exe', icon: '📁', defaultSize: { width: 650, height: 500 } },
     { id: 'music', title: 'MUSIC.exe', icon: '🎵', defaultSize: { width: 450, height: 400 } },
