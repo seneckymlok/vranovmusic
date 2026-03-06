@@ -1,7 +1,7 @@
 /**
  * ShareCardRenderer — Canvas-based engine for generating
  * Instagram-ready share cards from news posts.
- * 
+ *
  * Three templates: MIDNIGHT, SPLIT, NEON
  * Two formats:    STORY (1080×1920), POST (1080×1350)
  * Zero dependencies.
@@ -98,11 +98,14 @@ const drawImageCover = (
     ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
 };
 
-/** Format a date string for display */
+/** Format date for display */
 const formatDate = (iso: string): string =>
     new Date(iso).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric',
     });
+
+/** Proportional scale factor — floors at 0.82 so post format stays readable */
+const getScale = (H: number) => Math.max(0.82, H / 1920);
 
 // ─── Renderer ───────────────────────────────────────────
 
@@ -128,7 +131,6 @@ export class ShareCardRenderer {
         this.canvas.width = dims.width;
         this.canvas.height = dims.height;
 
-        // Load assets (graceful failures)
         const imageUrl = post.image_urls?.[0] || post.image_url;
         let postImage: HTMLImageElement | null = null;
         let logo: HTMLImageElement | null = null;
@@ -152,7 +154,9 @@ export class ShareCardRenderer {
         });
     }
 
-    // ────────────── MIDNIGHT ──────────────
+    // ══════════════════════════════════════════
+    //  MIDNIGHT — Album Announcement Poster
+    // ══════════════════════════════════════════
 
     private renderMidnight(
         post: NewsPost,
@@ -162,12 +166,13 @@ export class ShareCardRenderer {
     ) {
         const { ctx } = this;
         const { width: W, height: H } = dims;
+        const s = getScale(H);
 
-        // 1 ▸ Background — blurred post image or gradient fallback
+        // ── Background ──
         if (postImage) {
             ctx.save();
-            ctx.filter = 'blur(28px) brightness(0.35) saturate(1.2)';
-            drawImageCover(ctx, postImage, -30, -30, W + 60, H + 60);
+            ctx.filter = 'blur(30px) brightness(0.3) saturate(1.3)';
+            drawImageCover(ctx, postImage, -40, -40, W + 80, H + 80);
             ctx.restore();
         } else {
             const g = ctx.createLinearGradient(0, 0, W * 0.3, H);
@@ -178,77 +183,103 @@ export class ShareCardRenderer {
             ctx.fillRect(0, 0, W, H);
         }
 
-        // 2 ▸ Gradient overlay — cinematic depth
-        const overlay = ctx.createLinearGradient(0, 0, 0, H);
-        overlay.addColorStop(0, 'rgba(0, 0, 40, 0.55)');
-        overlay.addColorStop(0.3, 'rgba(0, 0, 20, 0.2)');
-        overlay.addColorStop(0.7, 'rgba(0, 0, 20, 0.25)');
-        overlay.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
-        ctx.fillStyle = overlay;
+        // ── Gradient overlay — cinematic ──
+        const ov = ctx.createLinearGradient(0, 0, 0, H);
+        ov.addColorStop(0, 'rgba(0, 0, 30, 0.5)');
+        ov.addColorStop(0.25, 'rgba(0, 0, 20, 0.15)');
+        ov.addColorStop(0.75, 'rgba(0, 0, 10, 0.2)');
+        ov.addColorStop(1, 'rgba(0, 0, 0, 0.75)');
+        ctx.fillStyle = ov;
         ctx.fillRect(0, 0, W, H);
 
-        // 3 ▸ Subtle vignette
-        const vig = ctx.createRadialGradient(W / 2, H / 2, W * 0.3, W / 2, H / 2, W * 0.9);
+        // ── Radial vignette ──
+        const vig = ctx.createRadialGradient(W / 2, H / 2, W * 0.25, W / 2, H / 2, W);
         vig.addColorStop(0, 'rgba(0,0,0,0)');
-        vig.addColorStop(1, 'rgba(0,0,0,0.4)');
+        vig.addColorStop(1, 'rgba(0,0,0,0.45)');
         ctx.fillStyle = vig;
         ctx.fillRect(0, 0, W, H);
 
-        // 4 ▸ Clean centered image
-        const pad = 90;
+        // ── Top accent line ──
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.1, Math.round(40 * s));
+        ctx.lineTo(W * 0.9, Math.round(40 * s));
+        ctx.stroke();
+        ctx.restore();
+
+        // ── Post image — big & prominent ──
+        const pad = 60;
         const imgW = W - pad * 2;
-        const imgH = Math.round(imgW * 0.7);
+        const imgH = Math.round(H * 0.38);
         const imgX = pad;
-        const imgY = Math.round(H * 0.17);
+        const imgY = Math.round(H * 0.065);
 
         if (postImage) {
-            // Drop shadow
+            // Shadow
             ctx.save();
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
-            ctx.shadowBlur = 50;
-            ctx.shadowOffsetY = 12;
-            roundRect(ctx, imgX, imgY, imgW, imgH, 14);
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+            ctx.shadowBlur = 60;
+            ctx.shadowOffsetY = 14;
+            roundRect(ctx, imgX, imgY, imgW, imgH, 16);
             ctx.fillStyle = '#000';
             ctx.fill();
             ctx.restore();
 
-            // Image (rounded clip)
+            // Image (rounded)
             ctx.save();
-            roundRect(ctx, imgX, imgY, imgW, imgH, 14);
+            roundRect(ctx, imgX, imgY, imgW, imgH, 16);
             ctx.clip();
             drawImageCover(ctx, postImage, imgX, imgY, imgW, imgH);
             ctx.restore();
 
-            // Thin luminous border
+            // Luminous border
             ctx.save();
-            roundRect(ctx, imgX, imgY, imgW, imgH, 14);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            roundRect(ctx, imgX, imgY, imgW, imgH, 16);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
             ctx.lineWidth = 1.5;
             ctx.stroke();
             ctx.restore();
         }
 
-        // 5 ▸ Title
-        const titleY = postImage ? imgY + imgH + 80 : Math.round(H * 0.38);
+        // ── Title ──
+        const titleSize = Math.round(48 * s);
+        const lineH = Math.round(64 * s);
+        const titleY = postImage ? imgY + imgH + Math.round(60 * s) : Math.round(H * 0.35);
+
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 52px "IBM Plex Mono", "Segoe UI", sans-serif';
+        ctx.font = `bold ${titleSize}px "IBM Plex Mono", "Segoe UI", sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        const lines = wrapText(ctx, post.title.toUpperCase(), W - 160).slice(0, 3);
-        lines.forEach((line, i) => ctx.fillText(line, W / 2, titleY + i * 68));
+        const lines = wrapText(ctx, post.title.toUpperCase(), W - 140).slice(0, 3);
+        lines.forEach((line, i) => ctx.fillText(line, W / 2, titleY + i * lineH));
 
-        // 6 ▸ Date
-        const dateY = titleY + lines.length * 68 + 24;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-        ctx.font = '24px "IBM Plex Mono", monospace';
+        // ── Date ──
+        const dateSize = Math.round(24 * s);
+        const dateY = titleY + lines.length * lineH + Math.round(20 * s);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.font = `${dateSize}px "IBM Plex Mono", monospace`;
         ctx.fillText(formatDate(post.created_at), W / 2, dateY);
 
-        // 7 ▸ Branding
-        this.drawBranding(logo, dims, '#FFFFFF', 'rgba(255,255,255,0.35)');
+        // ── Branding ──
+        this.drawBranding(logo, dims, '#FFFFFF', 'rgba(255,255,255,0.3)');
+
+        // ── Bottom accent line ──
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.1, H - Math.round(35 * s));
+        ctx.lineTo(W * 0.9, H - Math.round(35 * s));
+        ctx.stroke();
+        ctx.restore();
     }
 
-    // ────────────── SPLIT ──────────────
+    // ══════════════════════════════════════════
+    //  SPLIT — The VM Signature
+    // ══════════════════════════════════════════
 
     private renderSplit(
         post: NewsPost,
@@ -258,30 +289,31 @@ export class ShareCardRenderer {
     ) {
         const { ctx } = this;
         const { width: W, height: H } = dims;
+        const s = getScale(H);
 
-        // 1 ▸ Split background
+        // ── Split background ──
         ctx.fillStyle = '#FFFFFF';
         ctx.fillRect(0, 0, W / 2, H);
         ctx.fillStyle = '#000000';
         ctx.fillRect(W / 2, 0, W / 2, H);
 
-        // 2 ▸ Thin divider accent
-        ctx.fillStyle = 'rgba(128,128,128,0.15)';
+        // ── Divider accent ──
+        ctx.fillStyle = 'rgba(128,128,128,0.12)';
         ctx.fillRect(W / 2 - 1, 0, 2, H);
 
-        // 3 ▸ Image
-        const pad = 90;
+        // ── Image ──
+        const pad = 60;
         const imgW = W - pad * 2;
-        const imgH = Math.round(imgW * 0.7);
+        const imgH = Math.round(H * 0.38);
         const imgX = pad;
-        const imgY = Math.round(H * 0.25);
+        const imgY = Math.round(H * 0.06);
 
         if (postImage) {
             // Shadow
             ctx.save();
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
-            ctx.shadowBlur = 60;
-            ctx.shadowOffsetY = 16;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 65;
+            ctx.shadowOffsetY = 18;
             ctx.fillStyle = '#000';
             ctx.fillRect(imgX, imgY, imgW, imgH);
             ctx.restore();
@@ -295,20 +327,24 @@ export class ShareCardRenderer {
             ctx.restore();
 
             // Border
-            ctx.strokeStyle = 'rgba(128, 128, 128, 0.25)';
+            ctx.strokeStyle = 'rgba(128, 128, 128, 0.2)';
             ctx.lineWidth = 2;
             ctx.strokeRect(imgX, imgY, imgW, imgH);
         }
 
-        // 4 ▸ Title — split-colored
-        const titleY = postImage ? imgY + imgH + 80 : Math.round(H * 0.4);
-        ctx.font = 'bold 48px "IBM Plex Mono", "Segoe UI", sans-serif';
+        // ── Title — split-colored ──
+        const titleSize = Math.round(48 * s);
+        const lineH = Math.round(64 * s);
+        const titleY = postImage ? imgY + imgH + Math.round(60 * s) : Math.round(H * 0.38);
+
+        ctx.font = `bold ${titleSize}px "IBM Plex Mono", "Segoe UI", sans-serif`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        const lines = wrapText(ctx, post.title.toUpperCase(), W - 160).slice(0, 3);
+        const lines = wrapText(ctx, post.title.toUpperCase(), W - 140).slice(0, 3);
+
         lines.forEach((line, i) => {
-            const ly = titleY + i * 64;
+            const ly = titleY + i * lineH;
             // Left half — black on white
             ctx.save();
             ctx.beginPath(); ctx.rect(0, 0, W / 2, H); ctx.clip();
@@ -323,32 +359,33 @@ export class ShareCardRenderer {
             ctx.restore();
         });
 
-        // 5 ▸ Date — split-colored
-        const dateY = titleY + lines.length * 64 + 24;
-        ctx.font = '22px "IBM Plex Mono", monospace';
+        // ── Date — split-colored ──
+        const dateSize = Math.round(22 * s);
+        const dateY = titleY + lines.length * lineH + Math.round(18 * s);
         const dateStr = formatDate(post.created_at);
+        ctx.font = `${dateSize}px "IBM Plex Mono", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
         // Left
         ctx.save();
         ctx.beginPath(); ctx.rect(0, 0, W / 2, H); ctx.clip();
-        ctx.fillStyle = 'rgba(0,0,0,0.4)';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
         ctx.fillText(dateStr, W / 2, dateY);
         ctx.restore();
         // Right
         ctx.save();
         ctx.beginPath(); ctx.rect(W / 2, 0, W / 2, H); ctx.clip();
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
         ctx.fillText(dateStr, W / 2, dateY);
         ctx.restore();
 
-        // 6 ▸ Split branding
+        // ── Split branding ──
         this.drawSplitBranding(logo, dims);
     }
 
-    // ────────────── NEON ──────────────
+    // ══════════════════════════════════════════
+    //  NEON — OS Terminal / Cyberpunk
+    // ══════════════════════════════════════════
 
     private renderNeon(
         post: NewsPost,
@@ -358,15 +395,16 @@ export class ShareCardRenderer {
     ) {
         const { ctx } = this;
         const { width: W, height: H } = dims;
+        const s = getScale(H);
         const GREEN = '#00FF00';
 
-        // 1 ▸ Pure black
+        // ── Black background ──
         ctx.fillStyle = '#0A0A0A';
         ctx.fillRect(0, 0, W, H);
 
-        // 2 ▸ Subtle grid pattern
+        // ── Subtle grid ──
         ctx.save();
-        ctx.globalAlpha = 0.035;
+        ctx.globalAlpha = 0.03;
         ctx.strokeStyle = GREEN;
         ctx.lineWidth = 0.5;
         for (let x = 0; x < W; x += 60) {
@@ -377,20 +415,19 @@ export class ShareCardRenderer {
         }
         ctx.restore();
 
-        // 3 ▸ Image with multi-layer green glow
-        const pad = 120;
+        // ── Image with multi-layer green glow ──
+        const pad = 100;
         const imgW = W - pad * 2;
-        const imgH = Math.round(imgW * 0.7);
+        const imgH = Math.round(H * 0.36);
         const imgX = pad;
-        const imgY = Math.round(H * 0.18);
+        const imgY = Math.round(H * 0.065);
 
         if (postImage) {
-            // Glow layers (outermost → innermost)
             const glowLayers = [
-                { expand: 14, alpha: 0.06, blur: 35 },
-                { expand: 8, alpha: 0.12, blur: 18 },
-                { expand: 4, alpha: 0.25, blur: 10 },
-                { expand: 1, alpha: 0.8, blur: 4 },
+                { expand: 16, alpha: 0.05, blur: 40 },
+                { expand: 10, alpha: 0.1, blur: 20 },
+                { expand: 5, alpha: 0.2, blur: 12 },
+                { expand: 2, alpha: 0.7, blur: 5 },
             ];
 
             for (const gl of glowLayers) {
@@ -415,54 +452,66 @@ export class ShareCardRenderer {
             drawImageCover(ctx, postImage, imgX, imgY, imgW, imgH);
             ctx.restore();
 
-            // Inner green border
+            // Inner border
+            ctx.save();
             ctx.strokeStyle = GREEN;
-            ctx.globalAlpha = 0.6;
+            ctx.globalAlpha = 0.5;
             ctx.lineWidth = 1;
             ctx.strokeRect(imgX, imgY, imgW, imgH);
-            ctx.globalAlpha = 1;
+            ctx.restore();
         }
 
-        // 4 ▸ Scanlines overlay
+        // ── Scanlines ──
         ctx.save();
-        ctx.globalAlpha = 0.07;
+        ctx.globalAlpha = 0.06;
         for (let y = 0; y < H; y += 3) {
             ctx.fillStyle = '#000';
             ctx.fillRect(0, y, W, 1);
         }
         ctx.restore();
 
-        // 5 ▸ Title — neon green with glow
-        const titleY = postImage ? imgY + imgH + 90 : Math.round(H * 0.38);
+        // ── Title — neon green with ">" prefix ──
+        const titleSize = Math.round(50 * s);
+        const lineH = Math.round(66 * s);
+        const titleY = postImage ? imgY + imgH + Math.round(70 * s) : Math.round(H * 0.36);
+
         ctx.save();
         ctx.fillStyle = GREEN;
-        ctx.font = 'bold 52px "VT323", monospace';
-        ctx.textAlign = 'center';
+        ctx.font = `bold ${titleSize}px "VT323", monospace`;
+        ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         ctx.shadowColor = GREEN;
         ctx.shadowBlur = 20;
 
-        const lines = wrapText(ctx, post.title.toUpperCase(), W - 180).slice(0, 3);
-        // Draw twice for extra glow intensity
+        const titleLines = wrapText(ctx, post.title.toUpperCase(), W - 240).slice(0, 3);
+        // Double-pass for glow intensity
         for (let pass = 0; pass < 2; pass++) {
-            lines.forEach((line, i) => ctx.fillText(line, W / 2, titleY + i * 68));
+            titleLines.forEach((line, i) => {
+                ctx.fillText(`> ${line}`, 100, titleY + i * lineH);
+            });
         }
         ctx.restore();
 
-        // 6 ▸ Date
-        const dateY = titleY + lines.length * 68 + 24;
-        ctx.fillStyle = 'rgba(0, 255, 0, 0.35)';
-        ctx.font = '26px "VT323", monospace';
-        ctx.textAlign = 'center';
+        // ── Date in [bracket notation] ──
+        const dateSize = Math.round(26 * s);
+        const dateY = titleY + titleLines.length * lineH + Math.round(18 * s);
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+        ctx.font = `${dateSize}px "VT323", monospace`;
+        ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
-        ctx.fillText(formatDate(post.created_at), W / 2, dateY);
+        const d = new Date(post.created_at);
+        const neonDate = `[${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${d.getFullYear()}]`;
+        ctx.fillText(neonDate, 100, dateY);
 
-        // 7 ▸ Branding
-        this.drawBranding(logo, dims, GREEN, 'rgba(0, 255, 0, 0.35)');
+        // ── Branding ──
+        this.drawNeonBranding(logo, dims);
     }
 
-    // ────────────── Shared Branding ──────────────
+    // ══════════════════════════════════════════
+    //  BRANDING SECTIONS
+    // ══════════════════════════════════════════
 
+    /** Standard branding (Midnight) — large logo, tagline, big URL */
     private drawBranding(
         logo: HTMLImageElement | null,
         dims: CardDimensions,
@@ -471,85 +520,202 @@ export class ShareCardRenderer {
     ) {
         const { ctx } = this;
         const { width: W, height: H } = dims;
-        const baseY = H - 120;
+        const s = getScale(H);
 
-        // Separator line
+        // Compute from bottom up
+        const urlSize = Math.round(40 * s);
+        const taglineSize = Math.max(14, Math.round(18 * s));
+        const brandSize = Math.round(44 * s);
+        const logoH = Math.round(140 * s);
+
+        const urlY = H - Math.round(60 * s);
+        const taglineY = urlY - Math.round(52 * s);
+        const brandY = taglineY - Math.round(52 * s);
+        const logoBottomY = brandY - Math.round(25 * s);
+        const logoTopY = logoBottomY - logoH;
+        const sepY = logoTopY - Math.round(35 * s);
+
+        // Separator
         ctx.save();
         ctx.strokeStyle = subtextColor;
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(W * 0.3, baseY - 30);
-        ctx.lineTo(W * 0.7, baseY - 30);
+        ctx.moveTo(W * 0.15, sepY);
+        ctx.lineTo(W * 0.85, sepY);
         ctx.stroke();
         ctx.restore();
 
         // Logo
         if (logo) {
-            const lh = 55;
-            const lw = (logo.width / logo.height) * lh;
-            ctx.drawImage(logo, (W - lw) / 2, baseY - 15, lw, lh);
+            const lw = (logo.width / logo.height) * logoH;
+            ctx.drawImage(logo, (W - lw) / 2, logoTopY, lw, logoH);
         }
 
         // "VRANOV MUSIC"
         ctx.fillStyle = textColor;
-        ctx.font = 'bold 30px "VT323", monospace';
+        ctx.font = `bold ${brandSize}px "VT323", monospace`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.fillText('VRANOV MUSIC', W / 2, baseY + 50);
+        ctx.fillText('VRANOV MUSIC', W / 2, brandY);
 
-        // URL
+        // Tagline
         ctx.fillStyle = subtextColor;
-        ctx.font = '22px "IBM Plex Mono", monospace';
-        ctx.fillText('vranovmusic.eu', W / 2, baseY + 82);
+        ctx.font = `bold ${taglineSize}px "Impact", "Arial Black", sans-serif`;
+        ctx.letterSpacing = '4px';
+        ctx.fillText('MIDDLE EUROPE CONTINENT .', W / 2, taglineY);
+        ctx.letterSpacing = '0px';
+
+        // URL — bold, prominent
+        ctx.fillStyle = textColor;
+        ctx.font = `bold ${urlSize}px "IBM Plex Mono", monospace`;
+        ctx.fillText('vranovmusic.eu', W / 2, urlY);
     }
 
+    /** Split branding — everything dual-colored */
     private drawSplitBranding(
         logo: HTMLImageElement | null,
         dims: CardDimensions,
     ) {
         const { ctx } = this;
         const { width: W, height: H } = dims;
-        const baseY = H - 120;
+        const s = getScale(H);
 
-        // Separator — split colored
-        ctx.save();
-        ctx.beginPath(); ctx.rect(0, 0, W / 2, H); ctx.clip();
-        ctx.strokeStyle = 'rgba(0,0,0,0.15)';
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(W * 0.3, baseY - 30); ctx.lineTo(W * 0.7, baseY - 30); ctx.stroke();
-        ctx.restore();
-        ctx.save();
-        ctx.beginPath(); ctx.rect(W / 2, 0, W / 2, H); ctx.clip();
-        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(W * 0.3, baseY - 30); ctx.lineTo(W * 0.7, baseY - 30); ctx.stroke();
-        ctx.restore();
+        const urlSize = Math.round(40 * s);
+        const taglineSize = Math.max(14, Math.round(18 * s));
+        const brandSize = Math.round(44 * s);
+        const logoH = Math.round(140 * s);
 
-        // Logo
-        if (logo) {
-            const lh = 55;
-            const lw = (logo.width / logo.height) * lh;
-            ctx.drawImage(logo, (W - lw) / 2, baseY - 15, lw, lh);
-        }
+        const urlY = H - Math.round(60 * s);
+        const taglineY = urlY - Math.round(52 * s);
+        const brandY = taglineY - Math.round(52 * s);
+        const logoBottomY = brandY - Math.round(25 * s);
+        const logoTopY = logoBottomY - logoH;
+        const sepY = logoTopY - Math.round(35 * s);
 
-        // Text — split
-        const drawSplitText = (text: string, font: string, y: number, leftColor: string, rightColor: string) => {
+        // Helper: draw split-colored text
+        const splitText = (text: string, font: string, y: number, leftC: string, rightC: string) => {
             ctx.font = font;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'top';
             ctx.save();
             ctx.beginPath(); ctx.rect(0, 0, W / 2, H); ctx.clip();
-            ctx.fillStyle = leftColor;
+            ctx.fillStyle = leftC;
             ctx.fillText(text, W / 2, y);
             ctx.restore();
             ctx.save();
             ctx.beginPath(); ctx.rect(W / 2, 0, W / 2, H); ctx.clip();
-            ctx.fillStyle = rightColor;
+            ctx.fillStyle = rightC;
             ctx.fillText(text, W / 2, y);
             ctx.restore();
         };
 
-        drawSplitText('VRANOV MUSIC', 'bold 30px "VT323", monospace', baseY + 50, '#000', '#FFF');
-        drawSplitText('vranovmusic.eu', '22px "IBM Plex Mono", monospace', baseY + 82, 'rgba(0,0,0,0.4)', 'rgba(255,255,255,0.4)');
+        // Helper: draw split-colored line
+        const splitLine = (x1: number, x2: number, y: number) => {
+            ctx.lineWidth = 1;
+            ctx.save();
+            ctx.beginPath(); ctx.rect(0, 0, W / 2, H); ctx.clip();
+            ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+            ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke();
+            ctx.restore();
+            ctx.save();
+            ctx.beginPath(); ctx.rect(W / 2, 0, W / 2, H); ctx.clip();
+            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+            ctx.beginPath(); ctx.moveTo(x1, y); ctx.lineTo(x2, y); ctx.stroke();
+            ctx.restore();
+        };
+
+        // Separator
+        splitLine(W * 0.15, W * 0.85, sepY);
+
+        // Logo
+        if (logo) {
+            const lw = (logo.width / logo.height) * logoH;
+            ctx.drawImage(logo, (W - lw) / 2, logoTopY, lw, logoH);
+        }
+
+        // "VRANOV MUSIC"
+        splitText('VRANOV MUSIC', `bold ${brandSize}px "VT323", monospace`, brandY, '#000', '#FFF');
+
+        // Tagline
+        ctx.letterSpacing = '4px';
+        splitText('MIDDLE EUROPE CONTINENT .', `bold ${taglineSize}px "Impact", "Arial Black", sans-serif`, taglineY, 'rgba(0,0,0,0.35)', 'rgba(255,255,255,0.35)');
+        ctx.letterSpacing = '0px';
+
+        // URL
+        splitText('vranovmusic.eu', `bold ${urlSize}px "IBM Plex Mono", monospace`, urlY, '#000', '#FFF');
+    }
+
+    /** Neon branding — green-on-black, glowing, terminal-style */
+    private drawNeonBranding(
+        logo: HTMLImageElement | null,
+        dims: CardDimensions,
+    ) {
+        const { ctx } = this;
+        const { width: W, height: H } = dims;
+        const s = getScale(H);
+        const GREEN = '#00FF00';
+
+        const urlSize = Math.round(40 * s);
+        const taglineSize = Math.max(14, Math.round(18 * s));
+        const brandSize = Math.round(44 * s);
+        const logoH = Math.round(140 * s);
+
+        const urlY = H - Math.round(60 * s);
+        const taglineY = urlY - Math.round(52 * s);
+        const brandY = taglineY - Math.round(52 * s);
+        const logoBottomY = brandY - Math.round(25 * s);
+        const logoTopY = logoBottomY - logoH;
+        const sepY = logoTopY - Math.round(35 * s);
+
+        // Dashed separator
+        ctx.save();
+        ctx.strokeStyle = 'rgba(0, 255, 0, 0.25)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([12, 8]);
+        ctx.beginPath();
+        ctx.moveTo(W * 0.1, sepY);
+        ctx.lineTo(W * 0.9, sepY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+
+        // Logo with green glow
+        if (logo) {
+            const lw = (logo.width / logo.height) * logoH;
+            ctx.save();
+            ctx.shadowColor = GREEN;
+            ctx.shadowBlur = 25;
+            ctx.drawImage(logo, (W - lw) / 2, logoTopY, lw, logoH);
+            ctx.restore();
+        }
+
+        // "VRANOV MUSIC" — glowing
+        ctx.save();
+        ctx.fillStyle = GREEN;
+        ctx.font = `bold ${brandSize}px "VT323", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.shadowColor = GREEN;
+        ctx.shadowBlur = 15;
+        ctx.fillText('VRANOV MUSIC', W / 2, brandY);
+        ctx.restore();
+
+        // Tagline — dots instead of spaces
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+        ctx.font = `bold ${taglineSize}px "VT323", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText('MIDDLE.EUROPE.CONTINENT.', W / 2, taglineY);
+
+        // URL — large, glowing
+        ctx.save();
+        ctx.fillStyle = GREEN;
+        ctx.font = `bold ${urlSize}px "IBM Plex Mono", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.shadowColor = GREEN;
+        ctx.shadowBlur = 12;
+        ctx.fillText('vranovmusic.eu', W / 2, urlY);
+        ctx.restore();
     }
 }
