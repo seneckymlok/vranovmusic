@@ -6,7 +6,7 @@ import './GambleWindow.css';
 // Symbols for the slot machine
 const SYMBOLS = ['💿', '🐍', '💀', '🎤', '👁️', '7️⃣'];
 const DISCOUNT_CODE = 'VRANOV_STYLE_25';
-const WIN_CHANCE = 0.001; // 0.1% chance - Extremely small as requested
+const WIN_CHANCE = 0.002; // 0.2% chance - Extremely small as requested
 
 interface GambleState {
     spinsRemaining: number;
