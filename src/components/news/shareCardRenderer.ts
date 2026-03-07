@@ -343,7 +343,7 @@ export class ShareCardRenderer {
         const bUrlSize = Math.round(36 * s);
         const bTagSize = Math.max(13, Math.round(16 * s));
         const bNameSize = Math.round(40 * s);
-        const bLogoH = Math.round(160 * s);
+        const bLogoH = Math.round(250 * s);
 
         // Calculate total branding block height (below separator)
         const logoGap = Math.round(14 * s);
