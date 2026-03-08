@@ -3,19 +3,29 @@ import { socialLinks, bookingEmail } from '../data/links';
 import './ConnectWindow.css';
 
 export const ConnectWindow: React.FC = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        message: '',
-    });
-    const [sent, setSent] = useState(false);
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In real implementation, would send to backend
-        setSent(true);
-        setTimeout(() => setSent(false), 3000);
-        setFormData({ name: '', email: '', message: '' });
+        setStatus('loading');
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (!res.ok) throw new Error('Failed');
+
+            setStatus('success');
+            setFormData({ name: '', email: '', message: '' });
+            setTimeout(() => setStatus('idle'), 4000);
+        } catch {
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 4000);
+        }
     };
 
     return (
@@ -85,10 +95,15 @@ export const ConnectWindow: React.FC = () => {
                         />
                     </div>
                     <div className="form-actions">
-                        <button type="submit" className="btn-98 btn-98-primary">
-                            SEND
+                        <button
+                            type="submit"
+                            className="btn-98 btn-98-primary"
+                            disabled={status === 'loading'}
+                        >
+                            {status === 'loading' ? 'SENDING…' : 'SEND'}
                         </button>
-                        {sent && <span className="form-success text-green">✓ Message sent!</span>}
+                        {status === 'success' && <span className="form-success text-green">✓ Message sent!</span>}
+                        {status === 'error' && <span className="form-success" style={{ color: 'var(--vm-red)' }}>✗ Failed. Try again.</span>}
                     </div>
                 </form>
             </div>
