@@ -16,8 +16,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     try {
         await resend.emails.send({
-            from: 'VRANOV MUSIC <hq@vranovmusic.eu>',
-            to: ['hq@vranovmusic.eu'],
+            from: 'VRANOV MUSIC <info@vranovmusic.eu>',
+            to: ['info@vranovmusic.eu'],
             replyTo: email,
             subject: `[CONTACT] ${name}`,
             html: `
